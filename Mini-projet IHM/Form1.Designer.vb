@@ -39,7 +39,7 @@ Partial Class Form1
         Me.Oeil2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Y2MenuAjouter = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Y2MenuSupprimer = New System.Windows.Forms.ToolStripMenuItem()
         Me.BordVisageGaucheToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
@@ -161,24 +161,24 @@ Partial Class Form1
         'Y1MenuAjouter
         '
         Me.Y1MenuAjouter.Name = "Y1MenuAjouter"
-        Me.Y1MenuAjouter.Size = New System.Drawing.Size(180, 22)
+        Me.Y1MenuAjouter.Size = New System.Drawing.Size(129, 22)
         Me.Y1MenuAjouter.Text = "Ajouter"
         '
         'Y1MenuModifier
         '
         Me.Y1MenuModifier.Name = "Y1MenuModifier"
-        Me.Y1MenuModifier.Size = New System.Drawing.Size(180, 22)
+        Me.Y1MenuModifier.Size = New System.Drawing.Size(129, 22)
         Me.Y1MenuModifier.Text = "Modifier"
         '
         'Y1MenuSupprimer
         '
         Me.Y1MenuSupprimer.Name = "Y1MenuSupprimer"
-        Me.Y1MenuSupprimer.Size = New System.Drawing.Size(180, 22)
+        Me.Y1MenuSupprimer.Size = New System.Drawing.Size(129, 22)
         Me.Y1MenuSupprimer.Text = "Supprimer"
         '
         'Oeil2ToolStripMenuItem
         '
-        Me.Oeil2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Y2MenuAjouter, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3})
+        Me.Oeil2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Y2MenuAjouter, Me.ToolStripMenuItem2, Me.Y2MenuSupprimer})
         Me.Oeil2ToolStripMenuItem.Name = "Oeil2ToolStripMenuItem"
         Me.Oeil2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.Oeil2ToolStripMenuItem.Text = "Oeil 2"
@@ -186,20 +186,20 @@ Partial Class Form1
         'Y2MenuAjouter
         '
         Me.Y2MenuAjouter.Name = "Y2MenuAjouter"
-        Me.Y2MenuAjouter.Size = New System.Drawing.Size(129, 22)
+        Me.Y2MenuAjouter.Size = New System.Drawing.Size(180, 22)
         Me.Y2MenuAjouter.Text = "Ajouter"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(129, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem2.Text = "Modifier"
         '
-        'ToolStripMenuItem3
+        'Y2MenuSupprimer
         '
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(129, 22)
-        Me.ToolStripMenuItem3.Text = "Supprimer"
+        Me.Y2MenuSupprimer.Name = "Y2MenuSupprimer"
+        Me.Y2MenuSupprimer.Size = New System.Drawing.Size(180, 22)
+        Me.Y2MenuSupprimer.Text = "Supprimer"
         '
         'BordVisageGaucheToolStripMenuItem
         '
@@ -436,19 +436,19 @@ Partial Class Form1
         'ToolStripMenuItem31
         '
         Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
-        Me.ToolStripMenuItem31.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem31.Size = New System.Drawing.Size(129, 22)
         Me.ToolStripMenuItem31.Text = "Ajouter"
         '
         'ToolStripMenuItem32
         '
         Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
-        Me.ToolStripMenuItem32.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem32.Size = New System.Drawing.Size(129, 22)
         Me.ToolStripMenuItem32.Text = "Modifier"
         '
         'ToolStripMenuItem33
         '
         Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
-        Me.ToolStripMenuItem33.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem33.Size = New System.Drawing.Size(129, 22)
         Me.ToolStripMenuItem33.Text = "Supprimer"
         '
         'OptionsToolStripMenuItem
@@ -528,7 +528,7 @@ Partial Class Form1
     Friend WithEvents Y1MenuSupprimer As ToolStripMenuItem
     Friend WithEvents Y2MenuAjouter As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
+    Friend WithEvents Y2MenuSupprimer As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem5 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem6 As ToolStripMenuItem

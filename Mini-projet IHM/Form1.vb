@@ -28,6 +28,7 @@
             PictureBox1.Image = Image.FromFile(imageName)
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
+            Me.PartieSelectionee = Nothing
         End If
 
     End Sub
@@ -67,23 +68,23 @@
         Me.PartieSelectionee = 0
         Label1.Text = "Y1"
     End Sub
-
+    Private Sub Y1MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y1MenuSupprimer.Click
+        fichierCsv1.Delete(Me.imageName, 0)
+    End Sub
     Private Sub Y2MenuAjouter_Click(sender As Object, e As EventArgs) Handles Y2MenuAjouter.Click
         Me.PartieSelectionee = 1
         Label1.Text = "Y2"
     End Sub
-
-    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
-
+    Private Sub Y2MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y2MenuSupprimer.Click
+        fichierCsv1.Delete(Me.imageName, 1)
     End Sub
-
-    Private Sub Y1MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y1MenuSupprimer.Click
-
+    Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class
 
 Public Class FichierCsv
-    Private _listAnnotation As New List(Of Annotation())
+    Private _listAnnotation As New List(Of List(Of Annotation))
     Private _listFileName As New List(Of String)
 
     Public Property ListFileName As List(Of String)
@@ -95,11 +96,11 @@ Public Class FichierCsv
         End Set
     End Property
 
-    Public Property ListAnnotation As List(Of Annotation())
+    Public Property ListAnnotation As List(Of List(Of Annotation))
         Get
             Return _listAnnotation
         End Get
-        Set(value As List(Of Annotation()))
+        Set(value As List(Of List(Of Annotation)))
             _listAnnotation = value
         End Set
     End Property
@@ -108,8 +109,10 @@ Public Class FichierCsv
         Dim indexFileName As Integer
         If Not ListFileName.Contains(imageName) Then
             ListFileName.Add(imageName)
-            Dim a(12) As Annotation
-            ListAnnotation.Add(a)
+            ListAnnotation.Add(New List(Of Annotation))
+            For index = 0 To 11
+                ListAnnotation.Last.Add(Nothing)
+            Next
             indexFileName = ListAnnotation.Count - 1
         Else
             indexFileName = ListFileName.IndexOf(imageName)
@@ -118,9 +121,9 @@ Public Class FichierCsv
 
     End Sub
 
-    Public Sub Supprimer(imageName As String)
+    Public Sub Delete(imageName As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imageName)
-        ListAnnotation(indexFileName)(Form1.PartieSelectionee) = Nothing
+        ListAnnotation(indexFileName)(indexASupprimer) = Nothing
         'TODO supprimer éléments d'un tableau
     End Sub
     Public Sub Save(fileName As String)
@@ -148,8 +151,8 @@ Public Class FichierCsv
         Next
         Return True
     End Function
-    'TODO fonction load(fileName As String) qui lit un fichier .csv et initialise listAnnotation et listFileName en fonction
     Public Sub Load(fileName As String)
+        'TODO fonction load(fileName As String) qui lit un fichier .csv et initialise listAnnotation et listFileName en fonction
 
     End Sub
 End Class
