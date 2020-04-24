@@ -3,9 +3,21 @@
     Private imageName As String
     Private fichierCsv1 As New FichierCsv
     Private cheminFichierCsv As String
+    Private _PartieSelectionee As Integer
+
+    Public Property PartieSelectionee As Integer
+        Get
+            Return _PartieSelectionee
+        End Get
+        Set(value As Integer)
+            _PartieSelectionee = value
+            Label1.Text = value
+        End Set
+    End Property
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnregistrerToolStripMenuItem.Enabled = False
+        EditerToolStripMenuItem.Enabled = False
     End Sub
 
     Private Sub OuvrirImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirImageToolStripMenuItem.Click
@@ -15,7 +27,9 @@
             Me.imageName = OpenFileDialog1.FileName
             PictureBox1.Image = Image.FromFile(imageName)
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
+            EditerToolStripMenuItem.Enabled = True
         End If
+
     End Sub
 
     Private Sub OuvrirAnnotationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirAnnotationsToolStripMenuItem.Click
@@ -38,7 +52,7 @@
         saveFileDialog1.Filter = "csv files (*.csv)|*.csv"
 
         If saveFileDialog1.ShowDialog = DialogResult.OK Then
-            Save(saveFileDialog1.FileName)
+            fichierCsv1.Save(saveFileDialog1.FileName)
             cheminFichierCsv = saveFileDialog1.FileName
             EnregistrerToolStripMenuItem.Enabled = True
             saveFileDialog1.InitialDirectory = saveFileDialog1.FileName
@@ -46,34 +60,32 @@
     End Sub
 
     Private Sub EnregistrerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnregistrerToolStripMenuItem.Click
-        Save(cheminFichierCsv)
+        fichierCsv1.Save(cheminFichierCsv)
     End Sub
 
-    Private Sub Save(fileName As String)
-        Dim streamCsv As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
-        For i = 0 To fichierCsv1.ListFileName.Count - 1
-            streamCsv.Write(fichierCsv1.ListFileName(i) + " | ")
-            For y = 0 To fichierCsv1.ListAnnotation(i).Count - 1
-                streamCsv.Write(fichierCsv1.ListAnnotation(i)(y).XCoord1.ToString + " " + fichierCsv1.ListAnnotation(i)(y).YCoord1.ToString + " | ")
-            Next
-            streamCsv.WriteLine()
-        Next
-        streamCsv.Close()
+    Private Sub Y1MenuAjouter_Click(sender As Object, e As EventArgs) Handles Y1MenuAjouter.Click
+        Me.PartieSelectionee = 0
+        Label1.Text = "Y1"
+    End Sub
+
+    Private Sub Y2MenuAjouter_Click(sender As Object, e As EventArgs) Handles Y2MenuAjouter.Click
+        Me.PartieSelectionee = 1
+        Label1.Text = "Y2"
+    End Sub
+
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
+
+    End Sub
+
+    Private Sub Y1MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y1MenuSupprimer.Click
+
     End Sub
 End Class
 
-
 Public Class FichierCsv
-    Private _listAnnotation As New List(Of List(Of Annotation))
+    Private _listAnnotation As New List(Of Annotation())
     Private _listFileName As New List(Of String)
-    Public Property ListAnnotation As List(Of List(Of Annotation))
-        Get
-            Return _listAnnotation
-        End Get
-        Set(value As List(Of List(Of Annotation)))
-            _listAnnotation = value
-        End Set
-    End Property
+
     Public Property ListFileName As List(Of String)
         Get
             Return _listFileName
@@ -83,24 +95,65 @@ Public Class FichierCsv
         End Set
     End Property
 
+    Public Property ListAnnotation As List(Of Annotation())
+        Get
+            Return _listAnnotation
+        End Get
+        Set(value As List(Of Annotation()))
+            _listAnnotation = value
+        End Set
+    End Property
+
     Public Sub Add(annotation As Annotation, imageName As String)
         Dim indexFileName As Integer
         If Not ListFileName.Contains(imageName) Then
             ListFileName.Add(imageName)
-            ListAnnotation.Add(New List(Of Annotation))
+            Dim a(12) As Annotation
+            ListAnnotation.Add(a)
             indexFileName = ListAnnotation.Count - 1
         Else
             indexFileName = ListFileName.IndexOf(imageName)
         End If
-        ListAnnotation(indexFileName).Add(annotation)
+        ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
+
     End Sub
 
-    Public Sub Save(cheminCsv As String)
-        Dim outCsv As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(cheminCsv, False)
-        outCsv.WriteLine("Bonjour")
-        outCsv.WriteLine("Bonjour")
+    Public Sub Supprimer(imageName As String)
+        Dim indexFileName As Integer = ListFileName.IndexOf(imageName)
+        ListAnnotation(indexFileName)(Form1.PartieSelectionee) = Nothing
+        'TODO supprimer éléments d'un tableau
+    End Sub
+    Public Sub Save(fileName As String)
+        Dim streamCsv As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
+        For i = 0 To Me.ListFileName.Count - 1
+            streamCsv.Write(Me.ListFileName(i) + " | ")
+            For y = 0 To Me.ListAnnotation(i).Count - 1
+                If Me.ListAnnotation(i)(y) Is Nothing Then
+                    streamCsv.Write("null | ")
+                Else
+                    streamCsv.Write(Me.ListAnnotation(i)(y).XCoord1.ToString + " " + Me.ListAnnotation(i)(y).YCoord1.ToString + " | ")
+                End If
+
+            Next
+            streamCsv.WriteLine()
+        Next
+        streamCsv.Close()
+    End Sub
+
+    Public Function isFull(fileIndex As Integer) As Boolean
+        For index = 0 To 11
+            If ListAnnotation(fileIndex)(index) Is Nothing Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+    'TODO fonction load(fileName As String) qui lit un fichier .csv et initialise listAnnotation et listFileName en fonction
+    Public Sub Load(fileName As String)
+
     End Sub
 End Class
+
 Public Class Annotation
     Private xCoord, yCoord As Double
 
@@ -126,4 +179,8 @@ Public Class Annotation
             yCoord = value
         End Set
     End Property
+
+    Public Sub Draw()
+        'TODO fonction annotation.draw()
+    End Sub
 End Class
