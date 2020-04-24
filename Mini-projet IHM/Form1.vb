@@ -9,12 +9,21 @@
     End Sub
 
     Private Sub OuvrirImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirImageToolStripMenuItem.Click
+        Dim OpenFileDialog1 As New OpenFileDialog
         OpenFileDialog1.Filter = "Image |*.jpg;*.jpeg;*.png"
-
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             Me.imageName = OpenFileDialog1.FileName
-            OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             PictureBox1.Image = Image.FromFile(imageName)
+            OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
+        End If
+    End Sub
+
+    Private Sub OuvrirAnnotationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirAnnotationsToolStripMenuItem.Click
+        Dim OpenFileDialog2 As New OpenFileDialog
+        OpenFileDialog2.Filter = "csv file |*.csv"
+        If OpenFileDialog2.ShowDialog() = DialogResult.OK Then
+            Me.cheminFichierCsv = OpenFileDialog2.FileName
+            OpenFileDialog2.InitialDirectory = OpenFileDialog2.FileName
         End If
     End Sub
 
@@ -25,15 +34,14 @@
     End Sub
 
     Private Sub EnregistrerSousToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnregistrerSousToolStripMenuItem.Click
-        Dim saveFileDialog1 As SaveFileDialog = New SaveFileDialog
+        Dim saveFileDialog1 As New SaveFileDialog
         saveFileDialog1.Filter = "csv files (*.csv)|*.csv"
-        saveFileDialog1.FilterIndex = 1
-        saveFileDialog1.RestoreDirectory = True
 
         If saveFileDialog1.ShowDialog = DialogResult.OK Then
             Save(saveFileDialog1.FileName)
             cheminFichierCsv = saveFileDialog1.FileName
             EnregistrerToolStripMenuItem.Enabled = True
+            saveFileDialog1.InitialDirectory = saveFileDialog1.FileName
         End If
     End Sub
 
@@ -52,8 +60,8 @@
         Next
         streamCsv.Close()
     End Sub
-
 End Class
+
 
 Public Class FichierCsv
     Private _listAnnotation As New List(Of List(Of Annotation))

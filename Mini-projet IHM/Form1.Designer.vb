@@ -34,6 +34,7 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.OuvrirAnnotationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -49,7 +50,7 @@ Partial Class Form1
         '
         'FichierToolStripMenuItem
         '
-        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OuvrirImageToolStripMenuItem, Me.ToolStripSeparator1, Me.EnregistrerSousToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.ToolStripSeparator2, Me.QuitterToolStripMenuItem})
+        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OuvrirImageToolStripMenuItem, Me.OuvrirAnnotationsToolStripMenuItem, Me.ToolStripSeparator1, Me.EnregistrerSousToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.ToolStripSeparator2, Me.QuitterToolStripMenuItem})
         Me.FichierToolStripMenuItem.Name = "FichierToolStripMenuItem"
         Me.FichierToolStripMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.FichierToolStripMenuItem.Text = "Fichier"
@@ -113,6 +114,12 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
         '
+        'OuvrirAnnotationsToolStripMenuItem
+        '
+        Me.OuvrirAnnotationsToolStripMenuItem.Name = "OuvrirAnnotationsToolStripMenuItem"
+        Me.OuvrirAnnotationsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OuvrirAnnotationsToolStripMenuItem.Text = "Ouvrir annotations"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -143,4 +150,5 @@ Partial Class Form1
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents QuitterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents OuvrirAnnotationsToolStripMenuItem As ToolStripMenuItem
 End Class
