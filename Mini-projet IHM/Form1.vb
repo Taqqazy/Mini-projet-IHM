@@ -134,7 +134,7 @@ Public Class FichierCsv
                 If Me.ListAnnotation(i)(y) Is Nothing Then
                     streamCsv.Write("null | ")
                 Else
-                    streamCsv.Write(Me.ListAnnotation(i)(y).XCoord1.ToString + " " + Me.ListAnnotation(i)(y).YCoord1.ToString + " | ")
+                    streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString + " " + Me.ListAnnotation(i)(y).YCoord.ToString + " | ")
                 End If
 
             Next
@@ -158,28 +158,28 @@ Public Class FichierCsv
 End Class
 
 Public Class Annotation
-    Private xCoord, yCoord As Double
+    Private _xCoord, _yCoord As Double
 
     Public Sub New(xCoord As Double, yCoord As Double)
         Me.xCoord = xCoord
         Me.yCoord = yCoord
     End Sub
 
-    Public Property XCoord1 As Double
+    Public Property XCoord As Double
         Get
-            Return xCoord
+            Return _xCoord
         End Get
         Set(value As Double)
-            xCoord = value
+            _xCoord = value
         End Set
     End Property
 
-    Public Property YCoord1 As Double
+    Public Property YCoord As Double
         Get
-            Return yCoord
+            Return _yCoord
         End Get
         Set(value As Double)
-            yCoord = value
+            _yCoord = value
         End Set
     End Property
 
