@@ -28,7 +28,6 @@
             PictureBox1.Image = Image.FromFile(imageName)
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
-            Me.PartieSelectionee = Nothing
         End If
 
     End Sub
@@ -64,16 +63,11 @@
         fichierCsv1.Save(cheminFichierCsv)
     End Sub
 
-    Private Sub Y1MenuAjouter_Click(sender As Object, e As EventArgs) Handles Y1MenuAjouter.Click
-        Me.PartieSelectionee = 0
-        Label1.Text = "Y1"
-    End Sub
     Private Sub Y1MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y1MenuSupprimer.Click
         fichierCsv1.Delete(Me.imageName, 0)
     End Sub
-    Private Sub Y2MenuAjouter_Click(sender As Object, e As EventArgs) Handles Y2MenuAjouter.Click
-        Me.PartieSelectionee = 1
-        Label1.Text = "Y2"
+    Private Sub MenuAjouter_Click(sender As Object, e As EventArgs) Handles MenuAjouter1Y1.Click, MenuAjouter2Y2.Click, MenuAjouter3BVG.Click, MenuAjouter4BVD.Click
+        Me.PartieSelectionee = Convert.ToInt32(sender.name(1)) - 49
     End Sub
     Private Sub Y2MenuSupprimer_Click(sender As Object, e As EventArgs) Handles Y2MenuSupprimer.Click
         fichierCsv1.Delete(Me.imageName, 1)
@@ -95,7 +89,6 @@ Public Class FichierCsv
             _listFileName = value
         End Set
     End Property
-
     Public Property ListAnnotation As List(Of List(Of Annotation))
         Get
             Return _listAnnotation
@@ -104,7 +97,6 @@ Public Class FichierCsv
             _listAnnotation = value
         End Set
     End Property
-
     Public Sub Add(annotation As Annotation, imageName As String)
         Dim indexFileName As Integer
         If Not ListFileName.Contains(imageName) Then
@@ -120,7 +112,6 @@ Public Class FichierCsv
         ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
 
     End Sub
-
     Public Sub Delete(imageName As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imageName)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
@@ -142,7 +133,6 @@ Public Class FichierCsv
         Next
         streamCsv.Close()
     End Sub
-
     Public Function isFull(fileIndex As Integer) As Boolean
         For index = 0 To 11
             If ListAnnotation(fileIndex)(index) Is Nothing Then
