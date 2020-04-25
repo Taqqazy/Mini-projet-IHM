@@ -35,51 +35,51 @@ Partial Class Form1
         Me.Oeil1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter1Y1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Y1MenuModifier = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Y1MenuSupprimer = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer1Y1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Oeil2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter2Y2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Y2MenuSupprimer = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Y3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer2Y2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BordVisageGaucheToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter3BVG = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer3BVG = New System.Windows.Forms.ToolStripMenuItem()
         Me.BordVisageDroiteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter4BVD = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer4BVD = New System.Windows.Forms.ToolStripMenuItem()
         Me.BasDuNezToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter5BN = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer5BN = New System.Windows.Forms.ToolStripMenuItem()
         Me.BordNezGaucheToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter6BNG = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem14 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer6BNG = New System.Windows.Forms.ToolStripMenuItem()
         Me.BordNezDroiteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter7BND = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem18 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer7BND = New System.Windows.Forms.ToolStripMenuItem()
         Me.BasDuMentonToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter8BM = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem20 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer8BM = New System.Windows.Forms.ToolStripMenuItem()
         Me.HautDesLèvresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter9HL = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem23 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem24 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer9HL = New System.Windows.Forms.ToolStripMenuItem()
         Me.BasDesLèvresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter10BL = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem26 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem27 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer10BL = New System.Windows.Forms.ToolStripMenuItem()
         Me.GaucheDesLèvresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter11GL = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem29 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem30 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer11GL = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DroiteDesLèvresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuAjouter12DL = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem31 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem32 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem33 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuSupprimer12DL = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -146,14 +146,14 @@ Partial Class Form1
         '
         'EditerToolStripMenuItem
         '
-        Me.EditerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Oeil1ToolStripMenuItem, Me.Oeil2ToolStripMenuItem, Me.Y3, Me.BordVisageDroiteToolStripMenuItem, Me.BasDuNezToolStripMenuItem, Me.BordNezGaucheToolStripMenuItem, Me.BordNezDroiteToolStripMenuItem, Me.BasDuMentonToolStripMenuItem, Me.HautDesLèvresToolStripMenuItem, Me.BasDesLèvresToolStripMenuItem, Me.GaucheDesLèvresToolStripMenuItem, Me.MenuAjouter12DL})
+        Me.EditerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Oeil1ToolStripMenuItem, Me.Oeil2ToolStripMenuItem, Me.BordVisageGaucheToolStripMenuItem, Me.BordVisageDroiteToolStripMenuItem, Me.BasDuNezToolStripMenuItem, Me.BordNezGaucheToolStripMenuItem, Me.BordNezDroiteToolStripMenuItem, Me.BasDuMentonToolStripMenuItem, Me.HautDesLèvresToolStripMenuItem, Me.BasDesLèvresToolStripMenuItem, Me.GaucheDesLèvresToolStripMenuItem, Me.DroiteDesLèvresToolStripMenuItem})
         Me.EditerToolStripMenuItem.Name = "EditerToolStripMenuItem"
         Me.EditerToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
         Me.EditerToolStripMenuItem.Text = "Editer"
         '
         'Oeil1ToolStripMenuItem
         '
-        Me.Oeil1ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter1Y1, Me.Y1MenuModifier, Me.Y1MenuSupprimer})
+        Me.Oeil1ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter1Y1, Me.Y1MenuModifier, Me.MenuSupprimer1Y1})
         Me.Oeil1ToolStripMenuItem.Name = "Oeil1ToolStripMenuItem"
         Me.Oeil1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.Oeil1ToolStripMenuItem.Text = "Oeil 1"
@@ -170,15 +170,15 @@ Partial Class Form1
         Me.Y1MenuModifier.Size = New System.Drawing.Size(180, 22)
         Me.Y1MenuModifier.Text = "Modifier"
         '
-        'Y1MenuSupprimer
+        'MenuSupprimer1Y1
         '
-        Me.Y1MenuSupprimer.Name = "Y1MenuSupprimer"
-        Me.Y1MenuSupprimer.Size = New System.Drawing.Size(180, 22)
-        Me.Y1MenuSupprimer.Text = "Supprimer"
+        Me.MenuSupprimer1Y1.Name = "MenuSupprimer1Y1"
+        Me.MenuSupprimer1Y1.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer1Y1.Text = "Supprimer"
         '
         'Oeil2ToolStripMenuItem
         '
-        Me.Oeil2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter2Y2, Me.ToolStripMenuItem2, Me.Y2MenuSupprimer})
+        Me.Oeil2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter2Y2, Me.ToolStripMenuItem2, Me.MenuSupprimer2Y2})
         Me.Oeil2ToolStripMenuItem.Name = "Oeil2ToolStripMenuItem"
         Me.Oeil2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.Oeil2ToolStripMenuItem.Text = "Oeil 2"
@@ -195,18 +195,18 @@ Partial Class Form1
         Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem2.Text = "Modifier"
         '
-        'Y2MenuSupprimer
+        'MenuSupprimer2Y2
         '
-        Me.Y2MenuSupprimer.Name = "Y2MenuSupprimer"
-        Me.Y2MenuSupprimer.Size = New System.Drawing.Size(180, 22)
-        Me.Y2MenuSupprimer.Text = "Supprimer"
+        Me.MenuSupprimer2Y2.Name = "MenuSupprimer2Y2"
+        Me.MenuSupprimer2Y2.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer2Y2.Text = "Supprimer"
         '
-        'Y3
+        'BordVisageGaucheToolStripMenuItem
         '
-        Me.Y3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter3BVG, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6})
-        Me.Y3.Name = "Y3"
-        Me.Y3.Size = New System.Drawing.Size(180, 22)
-        Me.Y3.Text = "Bord visage gauche"
+        Me.BordVisageGaucheToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter3BVG, Me.ToolStripMenuItem5, Me.MenuSupprimer3BVG})
+        Me.BordVisageGaucheToolStripMenuItem.Name = "BordVisageGaucheToolStripMenuItem"
+        Me.BordVisageGaucheToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BordVisageGaucheToolStripMenuItem.Text = "Bord visage gauche"
         '
         'MenuAjouter3BVG
         '
@@ -220,15 +220,15 @@ Partial Class Form1
         Me.ToolStripMenuItem5.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem5.Text = "Modifier"
         '
-        'ToolStripMenuItem6
+        'MenuSupprimer3BVG
         '
-        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem6.Text = "Supprimer"
+        Me.MenuSupprimer3BVG.Name = "MenuSupprimer3BVG"
+        Me.MenuSupprimer3BVG.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer3BVG.Text = "Supprimer"
         '
         'BordVisageDroiteToolStripMenuItem
         '
-        Me.BordVisageDroiteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter4BVD, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
+        Me.BordVisageDroiteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter4BVD, Me.ToolStripMenuItem8, Me.MenuSupprimer4BVD})
         Me.BordVisageDroiteToolStripMenuItem.Name = "BordVisageDroiteToolStripMenuItem"
         Me.BordVisageDroiteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BordVisageDroiteToolStripMenuItem.Text = "Bord visage droite"
@@ -245,15 +245,15 @@ Partial Class Form1
         Me.ToolStripMenuItem8.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem8.Text = "Modifier"
         '
-        'ToolStripMenuItem9
+        'MenuSupprimer4BVD
         '
-        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem9.Text = "Supprimer"
+        Me.MenuSupprimer4BVD.Name = "MenuSupprimer4BVD"
+        Me.MenuSupprimer4BVD.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer4BVD.Text = "Supprimer"
         '
         'BasDuNezToolStripMenuItem
         '
-        Me.BasDuNezToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter5BN, Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
+        Me.BasDuNezToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter5BN, Me.ToolStripMenuItem11, Me.MenuSupprimer5BN})
         Me.BasDuNezToolStripMenuItem.Name = "BasDuNezToolStripMenuItem"
         Me.BasDuNezToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BasDuNezToolStripMenuItem.Text = "Bas du nez"
@@ -270,15 +270,15 @@ Partial Class Form1
         Me.ToolStripMenuItem11.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem11.Text = "Modifier"
         '
-        'ToolStripMenuItem12
+        'MenuSupprimer5BN
         '
-        Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem12.Text = "Supprimer"
+        Me.MenuSupprimer5BN.Name = "MenuSupprimer5BN"
+        Me.MenuSupprimer5BN.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer5BN.Text = "Supprimer"
         '
         'BordNezGaucheToolStripMenuItem
         '
-        Me.BordNezGaucheToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter6BNG, Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
+        Me.BordNezGaucheToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter6BNG, Me.ToolStripMenuItem14, Me.MenuSupprimer6BNG})
         Me.BordNezGaucheToolStripMenuItem.Name = "BordNezGaucheToolStripMenuItem"
         Me.BordNezGaucheToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BordNezGaucheToolStripMenuItem.Text = "Bord nez gauche"
@@ -295,15 +295,15 @@ Partial Class Form1
         Me.ToolStripMenuItem14.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem14.Text = "Modifier"
         '
-        'ToolStripMenuItem15
+        'MenuSupprimer6BNG
         '
-        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem15.Text = "Supprimer"
+        Me.MenuSupprimer6BNG.Name = "MenuSupprimer6BNG"
+        Me.MenuSupprimer6BNG.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer6BNG.Text = "Supprimer"
         '
         'BordNezDroiteToolStripMenuItem
         '
-        Me.BordNezDroiteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter7BND, Me.ToolStripMenuItem17, Me.ToolStripMenuItem18})
+        Me.BordNezDroiteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter7BND, Me.ToolStripMenuItem17, Me.MenuSupprimer7BND})
         Me.BordNezDroiteToolStripMenuItem.Name = "BordNezDroiteToolStripMenuItem"
         Me.BordNezDroiteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BordNezDroiteToolStripMenuItem.Text = "Bord nez droite"
@@ -320,15 +320,15 @@ Partial Class Form1
         Me.ToolStripMenuItem17.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem17.Text = "Modifier"
         '
-        'ToolStripMenuItem18
+        'MenuSupprimer7BND
         '
-        Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
-        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem18.Text = "Supprimer"
+        Me.MenuSupprimer7BND.Name = "MenuSupprimer7BND"
+        Me.MenuSupprimer7BND.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer7BND.Text = "Supprimer"
         '
         'BasDuMentonToolStripMenuItem
         '
-        Me.BasDuMentonToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter8BM, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21})
+        Me.BasDuMentonToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter8BM, Me.ToolStripMenuItem20, Me.MenuSupprimer8BM})
         Me.BasDuMentonToolStripMenuItem.Name = "BasDuMentonToolStripMenuItem"
         Me.BasDuMentonToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BasDuMentonToolStripMenuItem.Text = "Bas du menton"
@@ -345,15 +345,15 @@ Partial Class Form1
         Me.ToolStripMenuItem20.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem20.Text = "Modifier"
         '
-        'ToolStripMenuItem21
+        'MenuSupprimer8BM
         '
-        Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem21.Text = "Supprimer"
+        Me.MenuSupprimer8BM.Name = "MenuSupprimer8BM"
+        Me.MenuSupprimer8BM.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer8BM.Text = "Supprimer"
         '
         'HautDesLèvresToolStripMenuItem
         '
-        Me.HautDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter9HL, Me.ToolStripMenuItem23, Me.ToolStripMenuItem24})
+        Me.HautDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter9HL, Me.ToolStripMenuItem23, Me.MenuSupprimer9HL})
         Me.HautDesLèvresToolStripMenuItem.Name = "HautDesLèvresToolStripMenuItem"
         Me.HautDesLèvresToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.HautDesLèvresToolStripMenuItem.Text = "Haut des lèvres"
@@ -370,15 +370,15 @@ Partial Class Form1
         Me.ToolStripMenuItem23.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem23.Text = "Modifier"
         '
-        'ToolStripMenuItem24
+        'MenuSupprimer9HL
         '
-        Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
-        Me.ToolStripMenuItem24.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem24.Text = "Supprimer"
+        Me.MenuSupprimer9HL.Name = "MenuSupprimer9HL"
+        Me.MenuSupprimer9HL.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer9HL.Text = "Supprimer"
         '
         'BasDesLèvresToolStripMenuItem
         '
-        Me.BasDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter10BL, Me.ToolStripMenuItem26, Me.ToolStripMenuItem27})
+        Me.BasDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter10BL, Me.ToolStripMenuItem26, Me.MenuSupprimer10BL})
         Me.BasDesLèvresToolStripMenuItem.Name = "BasDesLèvresToolStripMenuItem"
         Me.BasDesLèvresToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BasDesLèvresToolStripMenuItem.Text = "Bas des lèvres"
@@ -395,15 +395,15 @@ Partial Class Form1
         Me.ToolStripMenuItem26.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem26.Text = "Modifier"
         '
-        'ToolStripMenuItem27
+        'MenuSupprimer10BL
         '
-        Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
-        Me.ToolStripMenuItem27.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem27.Text = "Supprimer"
+        Me.MenuSupprimer10BL.Name = "MenuSupprimer10BL"
+        Me.MenuSupprimer10BL.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer10BL.Text = "Supprimer"
         '
         'GaucheDesLèvresToolStripMenuItem
         '
-        Me.GaucheDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter11GL, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30})
+        Me.GaucheDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter11GL, Me.ToolStripMenuItem29, Me.MenuSupprimer11GL})
         Me.GaucheDesLèvresToolStripMenuItem.Name = "GaucheDesLèvresToolStripMenuItem"
         Me.GaucheDesLèvresToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.GaucheDesLèvresToolStripMenuItem.Text = "Gauche des lèvres"
@@ -420,24 +420,24 @@ Partial Class Form1
         Me.ToolStripMenuItem29.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem29.Text = "Modifier"
         '
-        'ToolStripMenuItem30
+        'MenuSupprimer11GL
         '
-        Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
-        Me.ToolStripMenuItem30.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem30.Text = "Supprimer"
+        Me.MenuSupprimer11GL.Name = "MenuSupprimer11GL"
+        Me.MenuSupprimer11GL.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer11GL.Text = "Supprimer"
+        '
+        'DroiteDesLèvresToolStripMenuItem
+        '
+        Me.DroiteDesLèvresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuAjouter12DL, Me.ToolStripMenuItem32, Me.MenuSupprimer12DL})
+        Me.DroiteDesLèvresToolStripMenuItem.Name = "DroiteDesLèvresToolStripMenuItem"
+        Me.DroiteDesLèvresToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DroiteDesLèvresToolStripMenuItem.Text = "Droite des lèvres"
         '
         'MenuAjouter12DL
         '
-        Me.MenuAjouter12DL.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem31, Me.ToolStripMenuItem32, Me.ToolStripMenuItem33})
         Me.MenuAjouter12DL.Name = "MenuAjouter12DL"
         Me.MenuAjouter12DL.Size = New System.Drawing.Size(180, 22)
-        Me.MenuAjouter12DL.Text = "Droite des lèvres"
-        '
-        'ToolStripMenuItem31
-        '
-        Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
-        Me.ToolStripMenuItem31.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem31.Text = "Ajouter"
+        Me.MenuAjouter12DL.Text = "Ajouter"
         '
         'ToolStripMenuItem32
         '
@@ -445,11 +445,11 @@ Partial Class Form1
         Me.ToolStripMenuItem32.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem32.Text = "Modifier"
         '
-        'ToolStripMenuItem33
+        'MenuSupprimer12DL
         '
-        Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
-        Me.ToolStripMenuItem33.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItem33.Text = "Supprimer"
+        Me.MenuSupprimer12DL.Name = "MenuSupprimer12DL"
+        Me.MenuSupprimer12DL.Size = New System.Drawing.Size(180, 22)
+        Me.MenuSupprimer12DL.Text = "Supprimer"
         '
         'OptionsToolStripMenuItem
         '
@@ -513,7 +513,7 @@ Partial Class Form1
     Friend WithEvents OuvrirAnnotationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Oeil1ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Oeil2ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents Y3 As ToolStripMenuItem
+    Friend WithEvents BordVisageGaucheToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BordVisageDroiteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BasDuNezToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BordNezGaucheToolStripMenuItem As ToolStripMenuItem
@@ -522,42 +522,42 @@ Partial Class Form1
     Friend WithEvents HautDesLèvresToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BasDesLèvresToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GaucheDesLèvresToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MenuAjouter12DL As ToolStripMenuItem
+    Friend WithEvents DroiteDesLèvresToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MenuAjouter1Y1 As ToolStripMenuItem
     Friend WithEvents Y1MenuModifier As ToolStripMenuItem
-    Friend WithEvents Y1MenuSupprimer As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer1Y1 As ToolStripMenuItem
     Friend WithEvents MenuAjouter2Y2 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
-    Friend WithEvents Y2MenuSupprimer As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer2Y2 As ToolStripMenuItem
     Friend WithEvents MenuAjouter3BVG As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem5 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem6 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer3BVG As ToolStripMenuItem
     Friend WithEvents MenuAjouter4BVD As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem8 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem9 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer4BVD As ToolStripMenuItem
     Friend WithEvents MenuAjouter5BN As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem11 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem12 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer5BN As ToolStripMenuItem
     Friend WithEvents MenuAjouter6BNG As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem14 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem15 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer6BNG As ToolStripMenuItem
     Friend WithEvents MenuAjouter7BND As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem17 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem18 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer7BND As ToolStripMenuItem
     Friend WithEvents MenuAjouter8BM As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem20 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem21 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer8BM As ToolStripMenuItem
     Friend WithEvents MenuAjouter9HL As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem23 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem24 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer9HL As ToolStripMenuItem
     Friend WithEvents MenuAjouter10BL As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem26 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem27 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer10BL As ToolStripMenuItem
     Friend WithEvents MenuAjouter11GL As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem29 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem30 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem31 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer11GL As ToolStripMenuItem
+    Friend WithEvents MenuAjouter12DL As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem32 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem33 As ToolStripMenuItem
+    Friend WithEvents MenuSupprimer12DL As ToolStripMenuItem
     Friend WithEvents Label1 As Label
 End Class
