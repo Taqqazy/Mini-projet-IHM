@@ -172,6 +172,7 @@ Partial Class Form1
         '
         'MenuSupprimer1Y1
         '
+        Me.MenuSupprimer1Y1.Enabled = False
         Me.MenuSupprimer1Y1.Name = "MenuSupprimer1Y1"
         Me.MenuSupprimer1Y1.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer1Y1.Text = "Supprimer"
@@ -197,6 +198,7 @@ Partial Class Form1
         '
         'MenuSupprimer2Y2
         '
+        Me.MenuSupprimer2Y2.Enabled = False
         Me.MenuSupprimer2Y2.Name = "MenuSupprimer2Y2"
         Me.MenuSupprimer2Y2.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer2Y2.Text = "Supprimer"
@@ -222,6 +224,7 @@ Partial Class Form1
         '
         'MenuSupprimer3BVG
         '
+        Me.MenuSupprimer3BVG.Enabled = False
         Me.MenuSupprimer3BVG.Name = "MenuSupprimer3BVG"
         Me.MenuSupprimer3BVG.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer3BVG.Text = "Supprimer"
@@ -247,6 +250,7 @@ Partial Class Form1
         '
         'MenuSupprimer4BVD
         '
+        Me.MenuSupprimer4BVD.Enabled = False
         Me.MenuSupprimer4BVD.Name = "MenuSupprimer4BVD"
         Me.MenuSupprimer4BVD.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer4BVD.Text = "Supprimer"
@@ -272,6 +276,7 @@ Partial Class Form1
         '
         'MenuSupprimer5BN
         '
+        Me.MenuSupprimer5BN.Enabled = False
         Me.MenuSupprimer5BN.Name = "MenuSupprimer5BN"
         Me.MenuSupprimer5BN.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer5BN.Text = "Supprimer"
@@ -297,6 +302,7 @@ Partial Class Form1
         '
         'MenuSupprimer6BNG
         '
+        Me.MenuSupprimer6BNG.Enabled = False
         Me.MenuSupprimer6BNG.Name = "MenuSupprimer6BNG"
         Me.MenuSupprimer6BNG.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer6BNG.Text = "Supprimer"
@@ -322,6 +328,7 @@ Partial Class Form1
         '
         'MenuSupprimer7BND
         '
+        Me.MenuSupprimer7BND.Enabled = False
         Me.MenuSupprimer7BND.Name = "MenuSupprimer7BND"
         Me.MenuSupprimer7BND.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer7BND.Text = "Supprimer"
@@ -347,6 +354,7 @@ Partial Class Form1
         '
         'MenuSupprimer8BM
         '
+        Me.MenuSupprimer8BM.Enabled = False
         Me.MenuSupprimer8BM.Name = "MenuSupprimer8BM"
         Me.MenuSupprimer8BM.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer8BM.Text = "Supprimer"
@@ -372,6 +380,7 @@ Partial Class Form1
         '
         'MenuSupprimer9HL
         '
+        Me.MenuSupprimer9HL.Enabled = False
         Me.MenuSupprimer9HL.Name = "MenuSupprimer9HL"
         Me.MenuSupprimer9HL.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer9HL.Text = "Supprimer"
@@ -397,6 +406,7 @@ Partial Class Form1
         '
         'MenuSupprimer10BL
         '
+        Me.MenuSupprimer10BL.Enabled = False
         Me.MenuSupprimer10BL.Name = "MenuSupprimer10BL"
         Me.MenuSupprimer10BL.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer10BL.Text = "Supprimer"
@@ -422,6 +432,7 @@ Partial Class Form1
         '
         'MenuSupprimer11GL
         '
+        Me.MenuSupprimer11GL.Enabled = False
         Me.MenuSupprimer11GL.Name = "MenuSupprimer11GL"
         Me.MenuSupprimer11GL.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer11GL.Text = "Supprimer"
@@ -447,6 +458,7 @@ Partial Class Form1
         '
         'MenuSupprimer12DL
         '
+        Me.MenuSupprimer12DL.Enabled = False
         Me.MenuSupprimer12DL.Name = "MenuSupprimer12DL"
         Me.MenuSupprimer12DL.Size = New System.Drawing.Size(180, 22)
         Me.MenuSupprimer12DL.Text = "Supprimer"

@@ -3,14 +3,14 @@ Public Class Form1
     Private imageName As String
     Private _fichierCsv1 As New FichierCsv
     Private cheminFichierCsv As String
-    Private _PartieSelectionee = -1
+    Private _partieSelectionee = -1
 
     Public Property PartieSelectionee As Integer
         Get
-            Return _PartieSelectionee
+            Return _partieSelectionee
         End Get
         Set(value As Integer)
-            _PartieSelectionee = value
+            _partieSelectionee = value
             Label1.Text = value
         End Set
     End Property
@@ -54,7 +54,33 @@ Public Class Form1
 
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
-            fichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.imageName)
+            FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.imageName)
+            Select Case PartieSelectionee
+                Case 0
+                    MenuSupprimer1Y1.Enabled = True
+                Case 1
+                    MenuSupprimer2Y2.Enabled = True
+                Case 2
+                    MenuSupprimer3BVG.Enabled = True
+                Case 3
+                    MenuSupprimer4BVD.Enabled = True
+                Case 4
+                    MenuSupprimer5BN.Enabled = True
+                Case 5
+                    MenuSupprimer6BNG.Enabled = True
+                Case 6
+                    MenuSupprimer7BND.Enabled = True
+                Case 7
+                    MenuSupprimer8BM.Enabled = True
+                Case 8
+                    MenuSupprimer9HL.Enabled = True
+                Case 9
+                    MenuSupprimer10BL.Enabled = True
+                Case 10
+                    MenuSupprimer11GL.Enabled = True
+                Case 11
+                    MenuSupprimer12DL.Enabled = True
+            End Select
             PartieSelectionee = -1
         End If
     End Sub
@@ -76,18 +102,50 @@ Public Class Form1
     End Sub
 
     Private Sub MenuAjouter_Click(sender As Object, e As EventArgs) Handles MenuAjouter1Y1.Click, MenuAjouter2Y2.Click, MenuAjouter3BVG.Click, MenuAjouter4BVD.Click, MenuAjouter5BN.Click, MenuAjouter6BNG.Click, MenuAjouter7BND.Click, MenuAjouter8BM.Click, MenuAjouter9HL.Click, MenuAjouter10BL.Click, MenuAjouter11GL.Click, MenuAjouter12DL.Click
+        Dim num As Integer
         If Convert.ToInt32(sender.name(12)) - 48 <= 9 Then
-            Me.PartieSelectionee = 10 * (Convert.ToInt32(sender.name(11)) - 48) + Convert.ToInt32(sender.name(12)) - 49
+            num = 10 * (Convert.ToInt32(sender.name(11)) - 48) + Convert.ToInt32(sender.name(12)) - 49
         Else
-            Me.PartieSelectionee = Convert.ToInt32(sender.name(11)) - 49
+            num = Convert.ToInt32(sender.name(11)) - 49
         End If
+        Me.PartieSelectionee = num
+        sender.Enabled = False
     End Sub
     Private Sub MenuSupprimer_Click(sender As Object, e As EventArgs) Handles MenuSupprimer1Y1.Click, MenuSupprimer2Y2.Click, MenuSupprimer3BVG.Click, MenuSupprimer4BVD.Click, MenuSupprimer5BN.Click, MenuSupprimer6BNG.Click, MenuSupprimer7BND.Click, MenuSupprimer8BM.Click, MenuSupprimer9HL.Click, MenuSupprimer10BL.Click, MenuSupprimer11GL.Click, MenuSupprimer12DL.Click
+        Dim num As Integer
         If Convert.ToInt32(sender.name(14)) - 48 <= 9 Then
-            fichierCsv1.Delete(Me.imageName, 10 * (Convert.ToInt32(sender.name(13)) - 48) + Convert.ToInt32(sender.name(14)) - 49)
+            num = 10 * (Convert.ToInt32(sender.name(13)) - 48) + Convert.ToInt32(sender.name(14)) - 49
         Else
-            fichierCsv1.Delete(Me.imageName, Convert.ToInt32(sender.name(13)) - 49)
+            num = Convert.ToInt32(sender.name(13)) - 49
         End If
+        FichierCsv1.Delete(Me.imageName, num)
+        sender.Enabled = False
+        Select Case num
+            Case 0
+                MenuAjouter1Y1.Enabled = True
+            Case 1
+                MenuAjouter2Y2.Enabled = True
+            Case 2
+                MenuAjouter3BVG.Enabled = True
+            Case 3
+                MenuAjouter4BVD.Enabled = True
+            Case 4
+                MenuAjouter5BN.Enabled = True
+            Case 5
+                MenuAjouter6BNG.Enabled = True
+            Case 6
+                MenuAjouter7BND.Enabled = True
+            Case 7
+                MenuAjouter8BM.Enabled = True
+            Case 8
+                MenuAjouter9HL.Enabled = True
+            Case 9
+                MenuAjouter10BL.Enabled = True
+            Case 10
+                MenuAjouter11GL.Enabled = True
+            Case 11
+                MenuAjouter12DL.Enabled = True
+        End Select
     End Sub
     Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
         Me.Close()
@@ -128,6 +186,7 @@ Public Class FichierCsv
         End If
         ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
         annotation.Draw()
+
 
     End Sub
     Public Sub Delete(imageName As String, indexASupprimer As Integer)
