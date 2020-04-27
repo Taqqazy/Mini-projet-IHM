@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Public Class Form1
-    Private imageName As String
+    Private _imageName As String
     Private _fichierCsv1 As New FichierCsv
     Private cheminFichierCsv As String
     Private _partieSelectionee = -1
@@ -24,6 +24,15 @@ Public Class Form1
         End Set
     End Property
 
+    Public Property ImageName As String
+        Get
+            Return _imageName
+        End Get
+        Set(value As String)
+            _imageName = value
+        End Set
+    End Property
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnregistrerToolStripMenuItem.Enabled = False
         EditerToolStripMenuItem.Enabled = False
@@ -33,10 +42,12 @@ Public Class Form1
         Dim OpenFileDialog1 As New OpenFileDialog
         OpenFileDialog1.Filter = "Image |*.jpg;*.jpeg;*.png"
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            Me.imageName = OpenFileDialog1.FileName
+            Me.ImageName = OpenFileDialog1.FileName
             PictureBox1.Image = Image.FromFile(imageName)
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
+            FichierCsv1.Draw_Update()
+
         End If
 
     End Sub
@@ -54,7 +65,7 @@ Public Class Form1
 
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
-            FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.imageName)
+            FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
             Select Case PartieSelectionee
                 Case 0
                     MenuSupprimer1Y1.Enabled = True
@@ -185,7 +196,9 @@ Public Class FichierCsv
             indexFileName = ListFileName.IndexOf(imageName)
         End If
         ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
-        annotation.Draw()
+        If Form1.ImageName = imageName Then
+            annotation.Draw()
+        End If
 
 
     End Sub
@@ -247,6 +260,27 @@ Public Class FichierCsv
                 End If
             Next
         Next
+        tmpstream.Close()
+    End Sub
+    Public Sub UnDraw_All()
+        For Each list In ListAnnotation
+            For Each sousliste In list
+                If sousliste IsNot Nothing Then
+                    Form1.Controls.Remove(sousliste.PictureBoxCross)
+                End If
+            Next
+        Next
+    End Sub
+
+    Public Sub Draw_Update()
+        UnDraw_All()
+        If ListFileName.Contains(Form1.ImageName) Then
+            For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(Form1.ImageName)).Count - 1
+                If ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i) IsNot Nothing Then
+                    ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i).Draw()
+                End If
+            Next
+        End If
     End Sub
 
 End Class
