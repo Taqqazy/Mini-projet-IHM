@@ -47,7 +47,6 @@ Public Class Form1
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
             FichierCsv1.Draw_Update()
-
         End If
 
     End Sub
@@ -60,38 +59,14 @@ Public Class Form1
             OpenFileDialog2.InitialDirectory = OpenFileDialog2.FileName
             FichierCsv1.Load(Me.cheminFichierCsv)
             EnregistrerToolStripMenuItem.Enabled = True
+            FichierCsv1.Draw_Update()
         End If
     End Sub
 
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
-            Select Case PartieSelectionee
-                Case 0
-                    MenuSupprimer1Y1.Enabled = True
-                Case 1
-                    MenuSupprimer2Y2.Enabled = True
-                Case 2
-                    MenuSupprimer3BVG.Enabled = True
-                Case 3
-                    MenuSupprimer4BVD.Enabled = True
-                Case 4
-                    MenuSupprimer5BN.Enabled = True
-                Case 5
-                    MenuSupprimer6BNG.Enabled = True
-                Case 6
-                    MenuSupprimer7BND.Enabled = True
-                Case 7
-                    MenuSupprimer8BM.Enabled = True
-                Case 8
-                    MenuSupprimer9HL.Enabled = True
-                Case 9
-                    MenuSupprimer10BL.Enabled = True
-                Case 10
-                    MenuSupprimer11GL.Enabled = True
-                Case 11
-                    MenuSupprimer12DL.Enabled = True
-            End Select
+            MenuAjouterSupprimer_Check(PartieSelectionee, 1)
             PartieSelectionee = -1
         End If
     End Sub
@@ -120,7 +95,6 @@ Public Class Form1
             num = Convert.ToInt32(sender.name(11)) - 49
         End If
         Me.PartieSelectionee = num
-        sender.Enabled = False
     End Sub
     Private Sub MenuSupprimer_Click(sender As Object, e As EventArgs) Handles MenuSupprimer1Y1.Click, MenuSupprimer2Y2.Click, MenuSupprimer3BVG.Click, MenuSupprimer4BVD.Click, MenuSupprimer5BN.Click, MenuSupprimer6BNG.Click, MenuSupprimer7BND.Click, MenuSupprimer8BM.Click, MenuSupprimer9HL.Click, MenuSupprimer10BL.Click, MenuSupprimer11GL.Click, MenuSupprimer12DL.Click
         Dim num As Integer
@@ -129,33 +103,48 @@ Public Class Form1
         Else
             num = Convert.ToInt32(sender.name(13)) - 49
         End If
-        FichierCsv1.Delete(Me.imageName, num)
-        sender.Enabled = False
+        FichierCsv1.Delete(Me.ImageName, num)
+        MenuAjouterSupprimer_Check(num, 0)
+    End Sub
+
+    Public Sub MenuAjouterSupprimer_Check(num As Integer, bool As Boolean)
         Select Case num
             Case 0
-                MenuAjouter1Y1.Enabled = True
+                MenuSupprimer1Y1.Enabled = bool
+                MenuAjouter1Y1.Enabled = Not bool
             Case 1
-                MenuAjouter2Y2.Enabled = True
+                MenuSupprimer2Y2.Enabled = bool
+                MenuAjouter2Y2.Enabled = Not bool
             Case 2
-                MenuAjouter3BVG.Enabled = True
+                MenuSupprimer3BVG.Enabled = bool
+                MenuAjouter3BVG.Enabled = Not bool
             Case 3
-                MenuAjouter4BVD.Enabled = True
+                MenuSupprimer4BVD.Enabled = bool
+                MenuAjouter4BVD.Enabled = Not bool
             Case 4
-                MenuAjouter5BN.Enabled = True
+                MenuSupprimer5BN.Enabled = bool
+                MenuAjouter5BN.Enabled = Not bool
             Case 5
-                MenuAjouter6BNG.Enabled = True
+                MenuSupprimer6BNG.Enabled = bool
+                MenuAjouter6BNG.Enabled = Not bool
             Case 6
-                MenuAjouter7BND.Enabled = True
+                MenuSupprimer7BND.Enabled = bool
+                MenuAjouter7BND.Enabled = Not bool
             Case 7
-                MenuAjouter8BM.Enabled = True
+                MenuSupprimer8BM.Enabled = bool
+                MenuAjouter8BM.Enabled = Not bool
             Case 8
-                MenuAjouter9HL.Enabled = True
+                MenuSupprimer9HL.Enabled = bool
+                MenuAjouter9HL.Enabled = Not bool
             Case 9
-                MenuAjouter10BL.Enabled = True
+                MenuSupprimer10BL.Enabled = bool
+                MenuAjouter10BL.Enabled = Not bool
             Case 10
-                MenuAjouter11GL.Enabled = True
+                MenuSupprimer11GL.Enabled = bool
+                MenuAjouter11GL.Enabled = Not bool
             Case 11
-                MenuAjouter12DL.Enabled = True
+                MenuSupprimer12DL.Enabled = bool
+                MenuAjouter12DL.Enabled = Not bool
         End Select
     End Sub
     Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
@@ -278,6 +267,7 @@ Public Class FichierCsv
             For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(Form1.ImageName)).Count - 1
                 If ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i) IsNot Nothing Then
                     ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i).Draw()
+                    Form1.MenuAjouterSupprimer_Check(i, 1)
                 End If
             Next
         End If
