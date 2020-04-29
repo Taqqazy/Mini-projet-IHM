@@ -270,6 +270,10 @@ Public Class FichierCsv
                     Form1.MenuAjouterSupprimer_Check(i, 1)
                 End If
             Next
+        Else
+            For i As Integer = 0 To 11
+                Form1.MenuAjouterSupprimer_Check(i, 0)
+            Next
         End If
     End Sub
 
