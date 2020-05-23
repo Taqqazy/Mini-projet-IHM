@@ -44,10 +44,11 @@ Public Class Form1
         OpenFileDialog1.Filter = "Image |*.jpg;*.jpeg;*.png"
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             Me.ImageName = OpenFileDialog1.FileName
-            PictureBox1.Image = Image.FromFile(imageName)
+            PictureBox1.Image = Image.FromFile(ImageName)
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
             FichierCsv1.Draw_Update()
+            btnAnnotter.Enabled = True
         End If
 
     End Sub
@@ -68,7 +69,7 @@ Public Class Form1
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
             MenuAjouterSupprimer_Check(PartieSelectionee, 1)
-            PartieSelectionee = -1
+            PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
         End If
     End Sub
 
@@ -77,7 +78,7 @@ Public Class Form1
         saveFileDialog1.Filter = "csv files (*.csv)|*.csv"
 
         If saveFileDialog1.ShowDialog = DialogResult.OK Then
-            fichierCsv1.Save(saveFileDialog1.FileName)
+            FichierCsv1.Save(saveFileDialog1.FileName)
             cheminFichierCsv = saveFileDialog1.FileName
             EnregistrerToolStripMenuItem.Enabled = True
             saveFileDialog1.InitialDirectory = saveFileDialog1.FileName
@@ -85,7 +86,7 @@ Public Class Form1
     End Sub
 
     Private Sub EnregistrerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnregistrerToolStripMenuItem.Click
-        fichierCsv1.Save(cheminFichierCsv)
+        FichierCsv1.Save(cheminFichierCsv)
     End Sub
 
     Private Sub MenuAjouter_Click(sender As Object, e As EventArgs) Handles MenuAjouter1Y1.Click, MenuAjouter2Y2.Click, MenuAjouter3BVG.Click, MenuAjouter4BVD.Click, MenuAjouter5BN.Click, MenuAjouter6BNG.Click, MenuAjouter7BND.Click, MenuAjouter8BM.Click, MenuAjouter9HL.Click, MenuAjouter10BL.Click, MenuAjouter11GL.Click, MenuAjouter12DL.Click
@@ -162,6 +163,17 @@ Public Class Form1
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
         End If
 
+    End Sub
+
+    Private Sub btnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
+        If Not FichierCsv1.ListFileName.Contains(ImageName) Then
+            FichierCsv1.ListFileName.Add(ImageName)
+            FichierCsv1.ListAnnotation.Add(New List(Of Annotation))
+            For index = 0 To 11
+                FichierCsv1.ListAnnotation.Last.Add(Nothing)
+            Next
+        End If
+        PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
     End Sub
 End Class
 
