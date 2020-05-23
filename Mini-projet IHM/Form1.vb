@@ -47,6 +47,7 @@ Public Class Form1
             OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
             EditerToolStripMenuItem.Enabled = True
             FichierCsv1.Draw_Update()
+            btnAnnotter.Enabled = True
         End If
 
     End Sub
@@ -67,7 +68,7 @@ Public Class Form1
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
             MenuAjouterSupprimer_Check(PartieSelectionee, 1)
-            PartieSelectionee = -1
+            PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
         End If
     End Sub
 
@@ -149,6 +150,17 @@ Public Class Form1
     End Sub
     Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
         Me.Close()
+    End Sub
+
+    Private Sub btnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
+        If Not FichierCsv1.ListFileName.Contains(ImageName) Then
+            FichierCsv1.ListFileName.Add(ImageName)
+            FichierCsv1.ListAnnotation.Add(New List(Of Annotation))
+            For index = 0 To 11
+                FichierCsv1.ListAnnotation.Last.Add(Nothing)
+            Next
+        End If
+        PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
     End Sub
 End Class
 
@@ -276,6 +288,10 @@ Public Class FichierCsv
             Next
         End If
     End Sub
+
+    Public Function nextAnnotation(imageName As String) As Integer
+        Return ListAnnotation(ListFileName.IndexOf(imageName)).IndexOf(Nothing)
+    End Function
 
 End Class
 
