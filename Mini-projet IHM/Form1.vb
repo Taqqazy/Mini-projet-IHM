@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Math
 Public Class Form1
     Private _imageName As String
     Private _fichierCsv1 As New FichierCsv
@@ -150,6 +151,18 @@ Public Class Form1
     Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
         Me.Close()
     End Sub
+
+    Private Sub TrouverSosieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TrouverSosieToolStripMenuItem.Click
+        Dim temp As Integer = FichierCsv1.Compare(ImageName)
+        If temp <> -1 Then
+            If temp <> -2 Then
+                Form2.Show()
+                Form2.PictureBox1.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
+            End If
+        Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
+        End If
+
+    End Sub
 End Class
 
 Public Class FichierCsv
@@ -188,7 +201,6 @@ Public Class FichierCsv
         If Form1.ImageName = imageName Then
             annotation.Draw()
         End If
-
 
     End Sub
     Public Sub Delete(imageName As String, indexASupprimer As Integer)
@@ -259,6 +271,7 @@ Public Class FichierCsv
                 End If
             Next
         Next
+        Form1.TrouverSosieToolStripMenuItem.Enabled = False
     End Sub
 
     Public Sub Draw_Update()
@@ -277,16 +290,75 @@ Public Class FichierCsv
         End If
     End Sub
 
+    Public Function Compare(imageName As String)
+        Dim indImage As Integer = ListFileName.IndexOf(imageName)
+        For z As Integer = 0 To ListAnnotation(indImage).Count - 1
+            If ListAnnotation(indImage)(z) Is Nothing Then
+                MsgBox("Veuilliez compléter toutes les annotations du visage à comparer avant de continuer", vbOKOnly)
+                Return -2
+            End If
+        Next
+
+        Dim ratios As New List(Of List(Of Double)) From {
+            New List(Of Double) From {0, 0, 0, 0},
+            Nothing,
+            New List(Of Double) From {0, 0, 0, 0}
+        }
+        ' liste contenant les ratios de 3 images (ratioLevre, ratioNez, ratioVisage, ratioYeux) (image à comparer et 2 autres qu'on compare à l'image à comparer pour garder la plus proche).
+        Dim dist01 As Double = 0
+        Dim dist02 As Double = 0
+        Dim indPlusSimilaire As Integer = -1
+        ratios(0)(0) = Compare_RatioCalcul(ListAnnotation(indImage)(9), ListAnnotation(indImage)(8), ListAnnotation(indImage)(11), ListAnnotation(indImage)(10))
+        ratios(0)(1) = Compare_RatioCalcul(ListAnnotation(indImage)(4), New Annotation((ListAnnotation(indImage)(0).XCoord + ListAnnotation(indImage)(1).XCoord) / 2, (ListAnnotation(indImage)(0).YCoord + ListAnnotation(indImage)(1).YCoord) / 2), ListAnnotation(indImage)(6), ListAnnotation(indImage)(5))
+        ratios(0)(2) = Compare_RatioCalcul(ListAnnotation(indImage)(7), New Annotation((ListAnnotation(indImage)(0).XCoord + ListAnnotation(indImage)(1).XCoord) / 2, (ListAnnotation(indImage)(0).YCoord + ListAnnotation(indImage)(1).YCoord) / 2), ListAnnotation(indImage)(3), ListAnnotation(indImage)(2))
+        ratios(0)(3) = Compare_RatioCalcul(ListAnnotation(indImage)(3), ListAnnotation(indImage)(2), ListAnnotation(indImage)(1), ListAnnotation(indImage)(0))
+
+        Dim i As Integer = 0
+        While i < ListFileName.Count
+            If i <> indImage Then
+                For y As Integer = 0 To ListAnnotation(i).Count - 1
+                    If ListAnnotation(i)(y) Is Nothing Then
+                        i += 1
+                    End If
+                Next
+                ratios(2)(0) = Compare_RatioCalcul(ListAnnotation(i)(9), ListAnnotation(i)(8), ListAnnotation(i)(11), ListAnnotation(i)(10))
+                ratios(2)(1) = Compare_RatioCalcul(ListAnnotation(i)(4), New Annotation((ListAnnotation(i)(0).XCoord + ListAnnotation(i)(1).XCoord) / 2, (ListAnnotation(i)(0).YCoord + ListAnnotation(i)(1).YCoord) / 2), ListAnnotation(i)(6), ListAnnotation(i)(5))
+                ratios(2)(2) = Compare_RatioCalcul(ListAnnotation(i)(7), New Annotation((ListAnnotation(i)(0).XCoord + ListAnnotation(i)(1).XCoord) / 2, (ListAnnotation(i)(0).YCoord + ListAnnotation(i)(1).YCoord) / 2), ListAnnotation(i)(3), ListAnnotation(i)(2))
+                ratios(2)(3) = Compare_RatioCalcul(ListAnnotation(i)(3), ListAnnotation(i)(2), ListAnnotation(i)(1), ListAnnotation(i)(0))
+
+                If ratios(1) Is Nothing Then
+                    ratios(1) = New List(Of Double)
+                    For Each nb In ratios(2)
+                        ratios(1).Add(nb)
+                    Next
+                    indPlusSimilaire = i
+                Else
+                    For y As Integer = 0 To ratios(0).Count - 1
+                        dist01 += Pow((ratios(0)(y) - ratios(1)(y)), 2)
+                        dist02 += Pow((ratios(0)(y) - ratios(2)(y)), 2)
+                    Next
+                    If dist02 < dist01 Then
+                        ratios(1) = New List(Of Double)
+                        For Each nb In ratios(2)
+                            ratios(1).Add(nb)
+                        Next
+                        indPlusSimilaire = i
+                    End If
+                End If
+            End If
+            i += 1
+        End While
+        Return indPlusSimilaire
+    End Function
+
+    Public Function Compare_RatioCalcul(a1 As Annotation, a2 As Annotation, a3 As Annotation, a4 As Annotation)
+        Return Sqrt(Pow((a2.XCoord - a1.XCoord), 2) + Pow((a2.YCoord - a1.YCoord), 2)) / Sqrt(Pow((a4.XCoord - a3.XCoord), 2) + Pow((a4.YCoord - a3.YCoord), 2))
+    End Function
 End Class
 
 Public Class Annotation
     Private _xCoord, _yCoord As Double
     Private _pictureBoxCross As PictureBox
-
-    Public Sub New(xCoord As Double, yCoord As Double)
-        Me.xCoord = xCoord
-        Me.yCoord = yCoord
-    End Sub
 
     Public Property XCoord As Double
         Get
@@ -306,6 +378,13 @@ Public Class Annotation
         End Set
     End Property
 
+    Public Sub New(xCoord As Double, yCoord As Double)
+        Me.XCoord = xCoord
+        Me.YCoord = yCoord
+    End Sub
+
+
+
     Public Property PictureBoxCross As PictureBox
         Get
             Return _pictureBoxCross
@@ -323,6 +402,7 @@ Public Class Annotation
         }
         Form1.Controls.Add(PictureBoxCross)
         PictureBoxCross.BringToFront()
+        Form1.TrouverSosieToolStripMenuItem.Enabled = True
     End Sub
 
 End Class

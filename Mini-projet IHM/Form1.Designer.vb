@@ -81,6 +81,7 @@ Partial Class Form1
         Me.ToolStripMenuItem32 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSupprimer12DL = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TrouverSosieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -465,9 +466,17 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TrouverSosieToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'TrouverSosieToolStripMenuItem
+        '
+        Me.TrouverSosieToolStripMenuItem.Enabled = False
+        Me.TrouverSosieToolStripMenuItem.Name = "TrouverSosieToolStripMenuItem"
+        Me.TrouverSosieToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TrouverSosieToolStripMenuItem.Text = "Trouver sosie"
         '
         'OpenFileDialog1
         '
@@ -572,4 +581,5 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem32 As ToolStripMenuItem
     Friend WithEvents MenuSupprimer12DL As ToolStripMenuItem
     Friend WithEvents Label1 As Label
+    Friend WithEvents TrouverSosieToolStripMenuItem As ToolStripMenuItem
 End Class
