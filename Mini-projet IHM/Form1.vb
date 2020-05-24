@@ -209,10 +209,10 @@ Public Class Form1
         If temp <> -1 Then
             If temp <> -2 Then
                 Form2.Show()
-                Form2.PictureBox1.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
+                Form2.PictureBox1.Image = Image.FromFile(CheminRepertoire & "\" & FichierCsv1.ListFileName(temp))
             End If
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
-    End If
+        End If
 
     End Sub
 
