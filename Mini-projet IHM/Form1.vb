@@ -212,7 +212,7 @@ Public Class Form1
     End Sub
 
     Private Sub TrouverSosieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TrouverSosieToolStripMenuItem.Click
-        Dim temp As Integer = FichierCsv1.Compare(ImageName)
+        Dim temp As Integer = FichierCsv1.Compare(CheminRepertoire & "\" & ImageName)
         If temp <> -1 Then
             If temp <> -2 Then
                 Form2.Show()
@@ -372,8 +372,8 @@ Public Class FichierCsv
         End If
     End Sub
 
-    Public Function Compare(imageName As String)
-        Dim indImage As Integer = ListFileName.IndexOf(imageName)
+    Public Function Compare(imagePath As String)
+        Dim indImage As Integer = ListFileName.IndexOf(imagePath)
         For z As Integer = 0 To ListAnnotation(indImage).Count - 1
             If ListAnnotation(indImage)(z) Is Nothing Then
                 MsgBox("Veuilliez compléter toutes les annotations du visage à comparer avant de continuer", vbOKOnly)
