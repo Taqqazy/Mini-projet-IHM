@@ -17,6 +17,12 @@ Public Class Form1
         'Quand l'utilisateur choisi un repertoire, on clear cboImages et la rempli avec les nouveaux noms de fichier
         Set(value As String)
             _cheminRepertoire = value
+            ImageName = ""
+            picImage.Image = Nothing
+
+            'ICI'
+
+
             Dim RepInfo As New DirectoryInfo(value)
             cboImages.Items.Clear()
             Dim infoFichierJpg As FileInfo() = RepInfo.GetFiles("*.jpg")
@@ -115,9 +121,9 @@ Public Class Form1
     'Quand l'utilisateur click sur l'image, et que une partie est séléctionnée, appel fonction FichierCsv.Add, actualisation de la partie séléctionné (suivante) et posibilité de la supprimer via Editer
     Private Sub PicImage_MouseClick(sender As Object, e As MouseEventArgs) Handles picImage.MouseClick
         If picImage.Image IsNot Nothing And PartieSelectionee <> -1 Then
-            FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
+            FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), CheminRepertoire & "\" & ImageName)
             MenuAjouterSupprimer_Check(PartieSelectionee, 1)
-            PartieSelectionee = FichierCsv1.NextAnnotation(ImageName)
+            PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
         End If
     End Sub
 
@@ -155,7 +161,7 @@ Public Class Form1
         Else
             num = Convert.ToInt32(sender.name(13)) - 49
         End If
-        FichierCsv1.Delete(Me.ImageName, num)
+        FichierCsv1.Delete(CheminRepertoire & "\" & ImageName, num)
         MenuAjouterSupprimer_Check(num, 0)
     End Sub
 
@@ -209,7 +215,7 @@ Public Class Form1
         If temp <> -1 Then
             If temp <> -2 Then
                 Form2.Show()
-                Form2.PictureBox1.Image = Image.FromFile(CheminRepertoire & "\" & FichierCsv1.ListFileName(temp))
+                Form2.PictureBox1.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
             End If
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
         End If
@@ -217,14 +223,14 @@ Public Class Form1
     End Sub
 
     Private Sub BtnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
-        If Not FichierCsv1.ListFileName.Contains(ImageName) Then
-            FichierCsv1.ListFileName.Add(ImageName)
+        If Not FichierCsv1.ListFileName.Contains(CheminRepertoire & "\" & ImageName) Then
+            FichierCsv1.ListFileName.Add(CheminRepertoire & "\" & ImageName)
             FichierCsv1.ListAnnotation.Add(New List(Of Annotation))
             For index = 0 To 11
                 FichierCsv1.ListAnnotation.Last.Add(Nothing)
             Next
         End If
-        PartieSelectionee = FichierCsv1.NextAnnotation(ImageName)
+        PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
 End Class
 
@@ -250,27 +256,27 @@ Public Class FichierCsv
         End Set
     End Property
 
-    Public Sub Add(annotation As Annotation, imageName As String)
+    Public Sub Add(annotation As Annotation, imagePath As String)
         Dim indexFileName As Integer
-        If Not ListFileName.Contains(imageName) Then
-            ListFileName.Add(imageName)
+        If Not ListFileName.Contains(imagePath) Then
+            ListFileName.Add(imagePath)
             ListAnnotation.Add(New List(Of Annotation))
             For index = 0 To 11
                 ListAnnotation.Last.Add(Nothing)
             Next
             indexFileName = ListAnnotation.Count - 1
         Else
-            indexFileName = ListFileName.IndexOf(imageName)
+            indexFileName = ListFileName.IndexOf(imagePath)
         End If
         ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
-        If Form1.ImageName = imageName Then
+        If Form1.CheminRepertoire & "\" & Form1.ImageName = imagePath Then
             annotation.Draw()
         End If
 
     End Sub
 
-    Public Sub Delete(imageName As String, indexASupprimer As Integer)
-        Dim indexFileName As Integer = ListFileName.IndexOf(imageName)
+    Public Sub Delete(imagePath As String, indexASupprimer As Integer)
+        Dim indexFileName As Integer = ListFileName.IndexOf(imagePath)
         Form1.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PictureBoxCross)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
     End Sub
@@ -296,8 +302,8 @@ Public Class FichierCsv
         End Try
     End Sub
 
-    Public Function NextAnnotation(imageName As String) As Integer
-        Return ListAnnotation(ListFileName.IndexOf(imageName)).IndexOf(Nothing)
+    Public Function NextAnnotation(imagePath As String) As Integer
+        Return ListAnnotation(ListFileName.IndexOf(imagePath)).IndexOf(Nothing)
     End Function
 
     Public Function Load(fileName As String) As Boolean
@@ -351,10 +357,10 @@ Public Class FichierCsv
 
     Public Sub Draw_Update()
         UnDraw_All()
-        If ListFileName.Contains(Form1.ImageName) Then
-            For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(Form1.ImageName)).Count - 1
-                If ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i) IsNot Nothing Then
-                    ListAnnotation(ListFileName.IndexOf(Form1.ImageName))(i).Draw()
+        If ListFileName.Contains(Form1.CheminRepertoire & "\" & Form1.ImageName) Then
+            For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName)).Count - 1
+                If ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName))(i) IsNot Nothing Then
+                    ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName))(i).Draw()
                     Form1.MenuAjouterSupprimer_Check(i, 1)
                 End If
             Next
