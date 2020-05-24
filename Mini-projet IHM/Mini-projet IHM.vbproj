@@ -134,5 +134,20 @@
   <ItemGroup>
     <None Include="Resources\sight1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\croix.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kisspng-american-red-cross-british-red-cross-clip-art-drug-free-clipart-5aa96992af9132.0012632615210520507191.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\approve+authentication+face+id+face+id+scan+face+scan+technology-1320190775298302960_512.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\approve+authentication+face+id+face+id+scan+face+scan+technology-1320190775298302960_64.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

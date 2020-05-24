@@ -1,4 +1,9 @@
-﻿Imports System.IO
+﻿'Head Scanner v1.0
+'IUT d'Orsay, 2020, Module IIHM
+'Auteurs : Lecardonnel Louis et Masoud Baptiste
+'https://github.com/Taqqazy/Mini-projet-IHM/
+
+Imports System.IO
 Imports System.Math
 Public Class frmMain
     Private _imageName As String
@@ -74,9 +79,10 @@ Public Class frmMain
         End Set
     End Property
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnregistrerToolStripMenuItem.Enabled = False
         EditerToolStripMenuItem.Enabled = False
+        Me.Icon = My.Resources.logo
     End Sub
 
     'Choix repertoire images grâce à un FolderBrowserDialog et affecter chemin à CheminRepertoire
@@ -225,6 +231,7 @@ Public Class frmMain
 
     End Sub
 
+    'Quand on click sur le bouton Annoter (viseur), ajoute l'image a FichierCsv1.ListFileName si pas déjà ajouter et init la liste d'annotations, et maj partieSelectionnée
     Private Sub BtnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
         If Not FichierCsv1.ListFileName.Contains(CheminRepertoire & "\" & ImageName) Then
             FichierCsv1.ListFileName.Add(CheminRepertoire & "\" & ImageName)
@@ -235,7 +242,6 @@ Public Class frmMain
         End If
         PartieSelectionnee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
-
 End Class
 
 Public Class FichierCsv
@@ -260,6 +266,7 @@ Public Class FichierCsv
         End Set
     End Property
 
+    'ajoute l'image a FichierCsv1.ListFileName si pas déjà ajouter et init la liste d'annotations puis ajoute une instance d'Annotation et la dessine
     Public Sub Add(annotation As Annotation, imagePath As String)
         Dim indexFileName As Integer
         If Not ListFileName.Contains(imagePath) Then
@@ -279,12 +286,15 @@ Public Class FichierCsv
 
     End Sub
 
+    'Supprime l'annotation à l'index 'indexASupprimer' de l'image 'imagePath'
     Public Sub Delete(imagePath As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imagePath)
         frmMain.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PicCross)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
     End Sub
 
+    'Boucle dans Me.ListFileName et Me.ListAnnotation et écrire grâce a un streamwriter dans le fichier 'fileName' 
+    'nb: écrit null si pas d'annotation
     Public Sub Save(fileName As String)
         Try
             Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
@@ -296,7 +306,6 @@ Public Class FichierCsv
                     Else
                         streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString + " " + Me.ListAnnotation(i)(y).YCoord.ToString + " | ")
                     End If
-
                 Next
                 streamCsv.WriteLine()
             Next
@@ -306,6 +315,8 @@ Public Class FichierCsv
         End Try
     End Sub
 
+    'Prend en paramètre une chemin d'une image 'imagePath' et renvoi l'index de la première annotation non instancier pour cette image (voir frmMain.listPartie pour ordre)
+    'Retourne -1 si tout est annoté
     Public Function NextAnnotation(imagePath As String) As Integer
         Return ListAnnotation(ListFileName.IndexOf(imagePath)).IndexOf(Nothing)
     End Function
@@ -354,7 +365,7 @@ Public Class FichierCsv
         For Each list In ListAnnotation
             For Each sousliste In list
                 If sousliste IsNot Nothing Then
-                    frmMain.Controls.Remove(sousliste.PicCross)
+                    frmMain.picImage.Controls.Remove(sousliste.PicCross)
                 End If
             Next
         Next
@@ -492,11 +503,12 @@ Public Class Annotation
         PicCross = New PictureBox With {
             .Image = My.Resources.cross,
             .SizeMode = PictureBoxSizeMode.AutoSize,
-            .Location = New Point(frmMain.picImage.Location.X + XCoord - 8, frmMain.picImage.Location.Y + YCoord - 8)
+            .Location = New Point(XCoord - 8, YCoord - 8),
+            .BackColor = Color.Transparent,
+            .Parent = frmMain.picImage
         }
-        frmMain.Controls.Add(PicCross)
+        frmMain.picImage.Controls.Add(PicCross)
         PicCross.BringToFront()
         frmMain.TrouverSosieToolStripMenuItem.Enabled = True
     End Sub
-
 End Class

@@ -143,8 +143,8 @@ Partial Class frmMain
         '
         Me.EditerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Oeil1ToolStripMenuItem, Me.Oeil2ToolStripMenuItem, Me.BordVisageGaucheToolStripMenuItem, Me.BordVisageDroiteToolStripMenuItem, Me.BasDuNezToolStripMenuItem, Me.BordNezGaucheToolStripMenuItem, Me.BordNezDroiteToolStripMenuItem, Me.BasDuMentonToolStripMenuItem, Me.HautDesLèvresToolStripMenuItem, Me.BasDesLèvresToolStripMenuItem, Me.GaucheDesLèvresToolStripMenuItem, Me.DroiteDesLèvresToolStripMenuItem})
         Me.EditerToolStripMenuItem.Name = "EditerToolStripMenuItem"
-        Me.EditerToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
-        Me.EditerToolStripMenuItem.Text = "Editer"
+        Me.EditerToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.EditerToolStripMenuItem.Text = "Edition"
         '
         'Oeil1ToolStripMenuItem
         '
@@ -390,14 +390,14 @@ Partial Class frmMain
         '
         Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TrouverSosieToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
-        Me.OptionsToolStripMenuItem.Text = "Options"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.OptionsToolStripMenuItem.Text = "Option"
         '
         'TrouverSosieToolStripMenuItem
         '
         Me.TrouverSosieToolStripMenuItem.Enabled = False
         Me.TrouverSosieToolStripMenuItem.Name = "TrouverSosieToolStripMenuItem"
-        Me.TrouverSosieToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
+        Me.TrouverSosieToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.TrouverSosieToolStripMenuItem.Text = "Trouver sosie"
         '
         'OpenFileDialog1
@@ -473,7 +473,11 @@ Partial Class frmMain
         Me.Controls.Add(Me.grbChoixImage)
         Me.Controls.Add(Me.picImage)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(827, 562)
+        Me.MinimumSize = New System.Drawing.Size(827, 562)
         Me.Name = "frmMain"
         Me.Text = "Head Scanner"
         Me.MenuStrip1.ResumeLayout(False)
