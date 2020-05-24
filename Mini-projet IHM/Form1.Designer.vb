@@ -24,7 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FichierToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OuvrirImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChoisirRepertoireToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OuvrirAnnotationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.EnregistrerSousToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -83,11 +83,12 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrouverSosieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.picImage = New System.Windows.Forms.PictureBox()
+        Me.lblPartie = New System.Windows.Forms.Label()
         Me.btnAnnotter = New System.Windows.Forms.Button()
+        Me.cboImages = New System.Windows.Forms.ComboBox()
         Me.MenuStrip1.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -101,16 +102,16 @@ Partial Class Form1
         '
         'FichierToolStripMenuItem
         '
-        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OuvrirImageToolStripMenuItem, Me.OuvrirAnnotationsToolStripMenuItem, Me.ToolStripSeparator1, Me.EnregistrerSousToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.ToolStripSeparator2, Me.QuitterToolStripMenuItem})
+        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChoisirRepertoireToolStripMenuItem, Me.OuvrirAnnotationsToolStripMenuItem, Me.ToolStripSeparator1, Me.EnregistrerSousToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.ToolStripSeparator2, Me.QuitterToolStripMenuItem})
         Me.FichierToolStripMenuItem.Name = "FichierToolStripMenuItem"
         Me.FichierToolStripMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.FichierToolStripMenuItem.Text = "Fichier"
         '
-        'OuvrirImageToolStripMenuItem
+        'ChoisirRepertoireToolStripMenuItem
         '
-        Me.OuvrirImageToolStripMenuItem.Name = "OuvrirImageToolStripMenuItem"
-        Me.OuvrirImageToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
-        Me.OuvrirImageToolStripMenuItem.Text = "Ouvrir image"
+        Me.ChoisirRepertoireToolStripMenuItem.Name = "ChoisirRepertoireToolStripMenuItem"
+        Me.ChoisirRepertoireToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+        Me.ChoisirRepertoireToolStripMenuItem.Text = "Choisir répertoire"
         '
         'OuvrirAnnotationsToolStripMenuItem
         '
@@ -476,30 +477,29 @@ Partial Class Form1
         '
         Me.TrouverSosieToolStripMenuItem.Enabled = False
         Me.TrouverSosieToolStripMenuItem.Name = "TrouverSosieToolStripMenuItem"
-        Me.TrouverSosieToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TrouverSosieToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.TrouverSosieToolStripMenuItem.Text = "Trouver sosie"
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.Title = "Ouvrir image"
         '
-        'PictureBox1
+        'picImage
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(191, 63)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(436, 429)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 1
-        Me.PictureBox1.TabStop = False
+        Me.picImage.Location = New System.Drawing.Point(255, 54)
+        Me.picImage.Name = "picImage"
+        Me.picImage.Size = New System.Drawing.Size(436, 429)
+        Me.picImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.picImage.TabIndex = 1
+        Me.picImage.TabStop = False
         '
-        'Label1
+        'lblPartie
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(714, 122)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Label1"
+        Me.lblPartie.AutoSize = True
+        Me.lblPartie.Location = New System.Drawing.Point(714, 122)
+        Me.lblPartie.Name = "lblPartie"
+        Me.lblPartie.Size = New System.Drawing.Size(0, 13)
+        Me.lblPartie.TabIndex = 2
         '
         'btnAnnotter
         '
@@ -510,21 +510,32 @@ Partial Class Form1
         Me.btnAnnotter.TabIndex = 3
         Me.btnAnnotter.UseVisualStyleBackColor = True
         '
+        'cboImages
+        '
+        Me.cboImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboImages.FormattingEnabled = True
+        Me.cboImages.Location = New System.Drawing.Point(12, 78)
+        Me.cboImages.Name = "cboImages"
+        Me.cboImages.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.cboImages.Size = New System.Drawing.Size(223, 21)
+        Me.cboImages.TabIndex = 4
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(830, 581)
+        Me.Controls.Add(Me.cboImages)
         Me.Controls.Add(Me.btnAnnotter)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.lblPartie)
+        Me.Controls.Add(Me.picImage)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.Text = "Head Scanner"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -535,13 +546,13 @@ Partial Class Form1
     Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents FichierToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OuvrirImageToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ChoisirRepertoireToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents EnregistrerSousToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EnregistrerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents QuitterToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents picImage As PictureBox
     Friend WithEvents OuvrirAnnotationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Oeil1ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Oeil2ToolStripMenuItem As ToolStripMenuItem
@@ -591,7 +602,8 @@ Partial Class Form1
     Friend WithEvents MenuAjouter12DL As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem32 As ToolStripMenuItem
     Friend WithEvents MenuSupprimer12DL As ToolStripMenuItem
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lblPartie As Label
     Friend WithEvents TrouverSosieToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnAnnotter As Button
+    Friend WithEvents cboImages As ComboBox
 End Class

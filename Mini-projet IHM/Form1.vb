@@ -5,6 +5,28 @@ Public Class Form1
     Private _fichierCsv1 As New FichierCsv
     Private cheminFichierCsv As String
     Private _partieSelectionee = -1
+    Private _cheminRepertoire As String
+    Private _listePartie As String() = {"Toutes les parties ont été annotées", "Oeil 1", "Oeil 2", "Bord visage gauche", "Bord visage droit", "Bas du nez", "Bord du nez gauche", "Bord du nez droit", "Bas du menton", "Haut des lèvres", "Bas des lèvres", "Gauche des lèvres", "Droite des lèvres"}
+
+    Public Property CheminRepertoire As String
+        Get
+            Return _cheminRepertoire
+        End Get
+        Set(value As String)
+            _cheminRepertoire = value
+            Dim RepInfo As New DirectoryInfo(value)
+            cboImages.Items.Clear()
+            Dim infoFichierJpg As FileInfo() = RepInfo.GetFiles("*.jpg")
+            Dim infoFichierPng As FileInfo() = RepInfo.GetFiles("*.png")
+            For Each fichier In infoFichierJpg
+                cboImages.Items.Add(fichier.Name)
+            Next
+            For Each fichier In infoFichierPng
+                cboImages.Items.Add(fichier.Name)
+            Next
+
+        End Set
+    End Property
 
     Public Property PartieSelectionee As Integer
         Get
@@ -12,7 +34,7 @@ Public Class Form1
         End Get
         Set(value As Integer)
             _partieSelectionee = value
-            Label1.Text = value
+            lblPartie.Text = ListePartie(value + 1)
         End Set
     End Property
 
@@ -34,24 +56,35 @@ Public Class Form1
         End Set
     End Property
 
+    Public Property ListePartie As String()
+        Get
+            Return _listePartie
+        End Get
+        Set(value As String())
+            _listePartie = value
+        End Set
+    End Property
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnregistrerToolStripMenuItem.Enabled = False
         EditerToolStripMenuItem.Enabled = False
     End Sub
 
-    Private Sub OuvrirImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirImageToolStripMenuItem.Click
-        Dim OpenFileDialog1 As New OpenFileDialog With {
-            .Filter = "Image |*.jpg;*.jpeg;*.png"
-        }
-        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            Me.ImageName = OpenFileDialog1.FileName
-            PictureBox1.Image = Image.FromFile(ImageName)
-            OpenFileDialog1.InitialDirectory = OpenFileDialog1.FileName
-            EditerToolStripMenuItem.Enabled = True
-            FichierCsv1.Draw_Update()
-            btnAnnotter.Enabled = True
+    Private Sub ChoisirRepertoireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChoisirRepertoireToolStripMenuItem.Click
+        Dim FolderBrowerDialog1 As New FolderBrowserDialog()
+        If FolderBrowerDialog1.ShowDialog() = DialogResult.OK Then
+            Me.CheminRepertoire = FolderBrowerDialog1.SelectedPath
         End If
+    End Sub
 
+    Private Sub CboImages_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboImages.SelectedIndexChanged
+        lblPartie.Text = ""
+        ImageName = cboImages.SelectedItem.ToString
+        Dim CheminComplet As String = CheminRepertoire & "\" & ImageName
+        picImage.Image = Image.FromFile(CheminComplet)
+        EditerToolStripMenuItem.Enabled = True
+        FichierCsv1.Draw_Update()
+        btnAnnotter.Enabled = True
     End Sub
 
     Private Sub OuvrirAnnotationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirAnnotationsToolStripMenuItem.Click
@@ -67,8 +100,8 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
-        If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
+    Private Sub PicImage_MouseClick(sender As Object, e As MouseEventArgs) Handles picImage.MouseClick
+        If picImage.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
             MenuAjouterSupprimer_Check(PartieSelectionee, 1)
             PartieSelectionee = FichierCsv1.NextAnnotation(ImageName)
@@ -101,6 +134,7 @@ Public Class Form1
         End If
         Me.PartieSelectionee = num
     End Sub
+
     Private Sub MenuSupprimer_Click(sender As Object, e As EventArgs) Handles MenuSupprimer1Y1.Click, MenuSupprimer2Y2.Click, MenuSupprimer3BVG.Click, MenuSupprimer4BVD.Click, MenuSupprimer5BN.Click, MenuSupprimer6BNG.Click, MenuSupprimer7BND.Click, MenuSupprimer8BM.Click, MenuSupprimer9HL.Click, MenuSupprimer10BL.Click, MenuSupprimer11GL.Click, MenuSupprimer12DL.Click
         Dim num As Integer
         If Convert.ToInt32(sender.name(14)) - 48 <= 9 Then
@@ -152,6 +186,7 @@ Public Class Form1
                 MenuAjouter12DL.Enabled = Not bool
         End Select
     End Sub
+
     Private Sub QuitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitterToolStripMenuItem.Click
         Me.Close()
     End Sub
@@ -164,7 +199,7 @@ Public Class Form1
                 Form2.PictureBox1.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
             End If
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
-        End If
+    End If
 
     End Sub
 
@@ -192,6 +227,7 @@ Public Class FichierCsv
             _listFileName = value
         End Set
     End Property
+
     Public Property ListAnnotation As List(Of List(Of Annotation))
         Get
             Return _listAnnotation
@@ -200,6 +236,7 @@ Public Class FichierCsv
             _listAnnotation = value
         End Set
     End Property
+
     Public Sub Add(annotation As Annotation, imageName As String)
         Dim indexFileName As Integer
         If Not ListFileName.Contains(imageName) Then
@@ -218,11 +255,13 @@ Public Class FichierCsv
         End If
 
     End Sub
+
     Public Sub Delete(imageName As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imageName)
         Form1.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PictureBoxCross)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
     End Sub
+
     Public Sub Save(fileName As String)
         Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
         For i = 0 To Me.ListFileName.Count - 1
@@ -239,10 +278,10 @@ Public Class FichierCsv
         Next
         streamCsv.Close()
     End Sub
+
     Public Function NextAnnotation(imageName As String) As Integer
         Return ListAnnotation(ListFileName.IndexOf(imageName)).IndexOf(Nothing)
     End Function
-
 
     Public Sub Load(fileName As String)
         Dim numRows As Long
@@ -275,6 +314,7 @@ Public Class FichierCsv
         Next
         tmpstream.Close()
     End Sub
+
     Public Sub UnDraw_All()
         For Each list In ListAnnotation
             For Each sousliste In list
@@ -395,8 +435,6 @@ Public Class Annotation
         Me.YCoord = yCoord
     End Sub
 
-
-
     Public Property PictureBoxCross As PictureBox
         Get
             Return _pictureBoxCross
@@ -410,7 +448,7 @@ Public Class Annotation
         PictureBoxCross = New PictureBox With {
             .Image = My.Resources.cross,
             .SizeMode = PictureBoxSizeMode.AutoSize,
-            .Location = New Point(Form1.PictureBox1.Location.X + XCoord - 8, Form1.PictureBox1.Location.Y + YCoord - 8)
+            .Location = New Point(Form1.picImage.Location.X + XCoord - 8, Form1.picImage.Location.Y + YCoord - 8)
         }
         Form1.Controls.Add(PictureBoxCross)
         PictureBoxCross.BringToFront()
