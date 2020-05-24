@@ -40,8 +40,9 @@ Public Class Form1
     End Sub
 
     Private Sub OuvrirImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirImageToolStripMenuItem.Click
-        Dim OpenFileDialog1 As New OpenFileDialog
-        OpenFileDialog1.Filter = "Image |*.jpg;*.jpeg;*.png"
+        Dim OpenFileDialog1 As New OpenFileDialog With {
+            .Filter = "Image |*.jpg;*.jpeg;*.png"
+        }
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             Me.ImageName = OpenFileDialog1.FileName
             PictureBox1.Image = Image.FromFile(ImageName)
@@ -54,8 +55,9 @@ Public Class Form1
     End Sub
 
     Private Sub OuvrirAnnotationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirAnnotationsToolStripMenuItem.Click
-        Dim OpenFileDialog2 As New OpenFileDialog
-        OpenFileDialog2.Filter = "csv file |*.csv"
+        Dim OpenFileDialog2 As New OpenFileDialog With {
+            .Filter = "csv file |*.csv"
+        }
         If OpenFileDialog2.ShowDialog() = DialogResult.OK Then
             Me.cheminFichierCsv = OpenFileDialog2.FileName
             OpenFileDialog2.InitialDirectory = OpenFileDialog2.FileName
@@ -69,13 +71,14 @@ Public Class Form1
         If PictureBox1.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
             MenuAjouterSupprimer_Check(PartieSelectionee, 1)
-            PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
+            PartieSelectionee = FichierCsv1.NextAnnotation(ImageName)
         End If
     End Sub
 
     Private Sub EnregistrerSousToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnregistrerSousToolStripMenuItem.Click
-        Dim saveFileDialog1 As New SaveFileDialog
-        saveFileDialog1.Filter = "csv files (*.csv)|*.csv"
+        Dim saveFileDialog1 As New SaveFileDialog With {
+            .Filter = "csv files (*.csv)|*.csv"
+        }
 
         If saveFileDialog1.ShowDialog = DialogResult.OK Then
             FichierCsv1.Save(saveFileDialog1.FileName)
@@ -165,7 +168,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub btnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
+    Private Sub BtnAnnotter_Click(sender As Object, e As EventArgs) Handles btnAnnotter.Click
         If Not FichierCsv1.ListFileName.Contains(ImageName) Then
             FichierCsv1.ListFileName.Add(ImageName)
             FichierCsv1.ListAnnotation.Add(New List(Of Annotation))
@@ -173,7 +176,7 @@ Public Class Form1
                 FichierCsv1.ListAnnotation.Last.Add(Nothing)
             Next
         End If
-        PartieSelectionee = FichierCsv1.nextAnnotation(ImageName)
+        PartieSelectionee = FichierCsv1.NextAnnotation(ImageName)
     End Sub
 End Class
 
@@ -236,14 +239,11 @@ Public Class FichierCsv
         Next
         streamCsv.Close()
     End Sub
-    Public Function isFull(fileIndex As Integer) As Boolean
-        For index = 0 To 11
-            If ListAnnotation(fileIndex)(index) Is Nothing Then
-                Return False
-            End If
-        Next
-        Return True
+    Public Function NextAnnotation(imageName As String) As Integer
+        Return ListAnnotation(ListFileName.IndexOf(imageName)).IndexOf(Nothing)
     End Function
+
+
     Public Sub Load(fileName As String)
         Dim numRows As Long
         Dim numCols As Long
