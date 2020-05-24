@@ -263,20 +263,24 @@ Public Class FichierCsv
     End Sub
 
     Public Sub Save(fileName As String)
-        Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
-        For i = 0 To Me.ListFileName.Count - 1
-            streamCsv.Write(Me.ListFileName(i) + " | ")
-            For y = 0 To Me.ListAnnotation(i).Count - 1
-                If Me.ListAnnotation(i)(y) Is Nothing Then
-                    streamCsv.Write("null | ")
-                Else
-                    streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString + " " + Me.ListAnnotation(i)(y).YCoord.ToString + " | ")
-                End If
+        Try
+            Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
+            For i = 0 To Me.ListFileName.Count - 1
+                streamCsv.Write(Me.ListFileName(i) + " | ")
+                For y = 0 To Me.ListAnnotation(i).Count - 1
+                    If Me.ListAnnotation(i)(y) Is Nothing Then
+                        streamCsv.Write("null | ")
+                    Else
+                        streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString + " " + Me.ListAnnotation(i)(y).YCoord.ToString + " | ")
+                    End If
 
+                Next
+                streamCsv.WriteLine()
             Next
-            streamCsv.WriteLine()
-        Next
-        streamCsv.Close()
+            streamCsv.Close()
+        Catch ex As System.IO.IOException
+            MessageBox.Show("Impossible de sauvegarder " & fileName & ". Essayez de fermer le fichier et vérifiez son accès en écriture", "Erreur sauvegarde", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Public Function NextAnnotation(imageName As String) As Integer
@@ -284,35 +288,39 @@ Public Class FichierCsv
     End Function
 
     Public Sub Load(fileName As String)
-        Dim numRows As Long
-        Dim numCols As Long
-        Dim tmpstream As StreamReader = File.OpenText(fileName)
-        Dim strlines() As String
-        Dim strline() As String
-        Dim strlinecoords() As String
-        Dim annotation As Annotation
+        Try
+            Dim numRows As Long
+            Dim numCols As Long
+            Dim tmpstream As StreamReader = File.OpenText(fileName)
+            Dim strlines() As String
+            Dim strline() As String
+            Dim strlinecoords() As String
+            Dim annotation As Annotation
 
-        strlines = tmpstream.ReadToEnd().Split(Environment.NewLine, 50, StringSplitOptions.RemoveEmptyEntries)
-        numRows = UBound(strlines)
-        strline = strlines(0).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
-        numCols = UBound(strline)
+            strlines = tmpstream.ReadToEnd().Split(Environment.NewLine, 50, StringSplitOptions.RemoveEmptyEntries)
+            numRows = UBound(strlines)
+            strline = strlines(0).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
+            numCols = UBound(strline)
 
-        For x As Integer = 0 To numRows
-            strline = strlines(x).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
-            For index As Integer = 0 To strline.Length - 1
-                strline(index) = strline(index).Trim()
+            For x As Integer = 0 To numRows
+                strline = strlines(x).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
+                For index As Integer = 0 To strline.Length - 1
+                    strline(index) = strline(index).Trim()
+                Next
+                For y As Integer = 1 To numCols
+                    If strline(y) <> "null" And strline(y) <> Nothing Then
+                        strlinecoords = strline(y).Split(" ", 4, StringSplitOptions.RemoveEmptyEntries)
+                        annotation = New Annotation(CInt(strlinecoords(0)), CInt(strlinecoords(1)))
+                        Form1.PartieSelectionee = y - 1
+                        Form1.FichierCsv1.Add(annotation, strline(0))
+                        Form1.PartieSelectionee = -1
+                    End If
+                Next
             Next
-            For y As Integer = 1 To numCols
-                If strline(y) <> "null" And strline(y) <> Nothing Then
-                    strlinecoords = strline(y).Split(" ", 4, StringSplitOptions.RemoveEmptyEntries)
-                    annotation = New Annotation(CInt(strlinecoords(0)), CInt(strlinecoords(1)))
-                    Form1.PartieSelectionee = y - 1
-                    Form1.FichierCsv1.Add(annotation, strline(0))
-                    Form1.PartieSelectionee = -1
-                End If
-            Next
-        Next
-        tmpstream.Close()
+            tmpstream.Close()
+        Catch ex As System.IO.IOException
+            MessageBox.Show("Impossible d'ouvrir " & fileName & ". Essayez de fermer le fichier et vérifiez son accès en lecture", "Erreur ouverture", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Public Sub UnDraw_All()
