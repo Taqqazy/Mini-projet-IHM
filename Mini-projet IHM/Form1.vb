@@ -6,25 +6,31 @@ Public Class Form1
     Private cheminFichierCsv As String
     Private _partieSelectionee = -1
     Private _cheminRepertoire As String
+    'Collection des différentes valeurs que peut prendre lblPartie
     Private _listePartie As String() = {"Toutes les parties ont été annotées", "Oeil 1", "Oeil 2", "Bord visage gauche", "Bord visage droit", "Bas du nez", "Bord du nez gauche", "Bord du nez droit", "Bas du menton", "Haut des lèvres", "Bas des lèvres", "Gauche des lèvres", "Droite des lèvres"}
 
     Public Property CheminRepertoire As String
         Get
             Return _cheminRepertoire
         End Get
+
+        'Quand l'utilisateur choisi un repertoire, on clear cboImages et la rempli avec les nouveaux noms de fichier
         Set(value As String)
             _cheminRepertoire = value
             Dim RepInfo As New DirectoryInfo(value)
             cboImages.Items.Clear()
             Dim infoFichierJpg As FileInfo() = RepInfo.GetFiles("*.jpg")
             Dim infoFichierPng As FileInfo() = RepInfo.GetFiles("*.png")
+            Dim infoFichierJpeg As FileInfo() = RepInfo.GetFiles("*.jpeg")
             For Each fichier In infoFichierJpg
                 cboImages.Items.Add(fichier.Name)
             Next
             For Each fichier In infoFichierPng
                 cboImages.Items.Add(fichier.Name)
             Next
-
+            For Each fichier In infoFichierJpeg
+                cboImages.Items.Add(fichier.Name)
+            Next
         End Set
     End Property
 
@@ -70,6 +76,7 @@ Public Class Form1
         EditerToolStripMenuItem.Enabled = False
     End Sub
 
+    'Choix repertoire images grâce à un FolderBrowserDialog et affecter chemin à CheminRepertoire
     Private Sub ChoisirRepertoireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChoisirRepertoireToolStripMenuItem.Click
         Dim FolderBrowerDialog1 As New FolderBrowserDialog()
         If FolderBrowerDialog1.ShowDialog() = DialogResult.OK Then
@@ -77,6 +84,7 @@ Public Class Form1
         End If
     End Sub
 
+    'Quand l'utilisateur choisi une image, on affecte ImageName, affiche l'image et actualise les annotations
     Private Sub CboImages_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboImages.SelectedIndexChanged
         lblPartie.Text = ""
         ImageName = cboImages.SelectedItem.ToString
@@ -87,19 +95,24 @@ Public Class Form1
         btnAnnotter.Enabled = True
     End Sub
 
+    'Ouverture fichier .csv grâce à un OpenFileDialog et si ouverture réussie, actualisation des annotations afficher sur l'image et activation bouton "Enregistrer"
     Private Sub OuvrirAnnotationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OuvrirAnnotationsToolStripMenuItem.Click
         Dim OpenFileDialog2 As New OpenFileDialog With {
             .Filter = "csv file |*.csv"
-        }
+            }
+
         If OpenFileDialog2.ShowDialog() = DialogResult.OK Then
             Me.cheminFichierCsv = OpenFileDialog2.FileName
             OpenFileDialog2.InitialDirectory = OpenFileDialog2.FileName
-            FichierCsv1.Load(Me.cheminFichierCsv)
-            EnregistrerToolStripMenuItem.Enabled = True
-            FichierCsv1.Draw_Update()
+            If FichierCsv1.Load(Me.cheminFichierCsv) Then
+                EnregistrerToolStripMenuItem.Enabled = True
+                FichierCsv1.Draw_Update()
+            End If
         End If
+
     End Sub
 
+    'Quand l'utilisateur click sur l'image, et que une partie est séléctionnée, appel fonction FichierCsv.Add, actualisation de la partie séléctionné (suivante) et posibilité de la supprimer via Editer
     Private Sub PicImage_MouseClick(sender As Object, e As MouseEventArgs) Handles picImage.MouseClick
         If picImage.Image IsNot Nothing And PartieSelectionee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), Me.ImageName)
@@ -287,7 +300,7 @@ Public Class FichierCsv
         Return ListAnnotation(ListFileName.IndexOf(imageName)).IndexOf(Nothing)
     End Function
 
-    Public Sub Load(fileName As String)
+    Public Function Load(fileName As String) As Boolean
         Try
             Dim numRows As Long
             Dim numCols As Long
@@ -318,10 +331,12 @@ Public Class FichierCsv
                 Next
             Next
             tmpstream.Close()
+            Return True
         Catch ex As System.IO.IOException
             MessageBox.Show("Impossible d'ouvrir " & fileName & ". Essayez de fermer le fichier et vérifiez son accès en lecture", "Erreur ouverture", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
         End Try
-    End Sub
+    End Function
 
     Public Sub UnDraw_All()
         For Each list In ListAnnotation
