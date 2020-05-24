@@ -7,7 +7,7 @@ Public Class frmMain
     Private _partieSelectionnee As Integer = -1
     Private _cheminRepertoire As String
     'Collection des différentes valeurs que peut prendre lblPartie
-    Private _listePartie As String() = {"Toutes les parties ont été annotées", "Oeil 1", "Oeil 2", "Bord visage gauche", "Bord visage droit", "Bas du nez", "Bord du nez gauche", "Bord du nez droit", "Bas du menton", "Haut des lèvres", "Bas des lèvres", "Gauche des lèvres", "Droite des lèvres"}
+    Private _listePartie As String() = {"Toutes les parties ont été" & Chr(13) & Chr(10) & "annotées", "Oeil 1", "Oeil 2", "Bord visage gauche", "Bord visage droit", "Bas du nez", "Bord du nez gauche", "Bord du nez droit", "Bas du menton", "Haut des lèvres", "Bas des lèvres", "Gauche des lèvres", "Droite des lèvres"}
 
     Public Property CheminRepertoire As String
         Get
@@ -96,6 +96,7 @@ Public Class frmMain
         EditerToolStripMenuItem.Enabled = True
         FichierCsv1.Draw_Update()
         btnAnnotter.Enabled = True
+        btnAnnotter.BackColor = Color.Red
     End Sub
 
     'Ouverture fichier .csv grâce à un OpenFileDialog et si ouverture réussie, actualisation des annotations afficher sur l'image et activation bouton "Enregistrer"
@@ -220,7 +221,7 @@ Public Class frmMain
                 frmSosie.picSosie.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
             End If
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
-        End If
+    End If
 
     End Sub
 
@@ -234,6 +235,7 @@ Public Class frmMain
         End If
         PartieSelectionnee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
+
 End Class
 
 Public Class FichierCsv

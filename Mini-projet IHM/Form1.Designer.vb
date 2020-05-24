@@ -73,12 +73,14 @@ Partial Class frmMain
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.lblPartie = New System.Windows.Forms.Label()
         Me.cboImages = New System.Windows.Forms.ComboBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.grbChoixImage = New System.Windows.Forms.GroupBox()
         Me.btnAnnotter = New System.Windows.Forms.Button()
         Me.picImage = New System.Windows.Forms.PictureBox()
+        Me.grbAnnoter = New System.Windows.Forms.GroupBox()
         Me.MenuStrip1.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.grbChoixImage.SuspendLayout()
         CType(Me.picImage, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grbAnnoter.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -405,9 +407,10 @@ Partial Class frmMain
         'lblPartie
         '
         Me.lblPartie.AutoSize = True
-        Me.lblPartie.Location = New System.Drawing.Point(714, 122)
+        Me.lblPartie.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPartie.Location = New System.Drawing.Point(6, 30)
         Me.lblPartie.Name = "lblPartie"
-        Me.lblPartie.Size = New System.Drawing.Size(0, 13)
+        Me.lblPartie.Size = New System.Drawing.Size(0, 15)
         Me.lblPartie.TabIndex = 2
         '
         'cboImages
@@ -420,42 +423,54 @@ Partial Class frmMain
         Me.cboImages.Size = New System.Drawing.Size(223, 21)
         Me.cboImages.TabIndex = 4
         '
-        'GroupBox1
+        'grbChoixImage
         '
-        Me.GroupBox1.Controls.Add(Me.cboImages)
-        Me.GroupBox1.Controls.Add(Me.btnAnnotter)
-        Me.GroupBox1.Location = New System.Drawing.Point(31, 54)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(248, 147)
-        Me.GroupBox1.TabIndex = 5
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Choix de l'image"
+        Me.grbChoixImage.Controls.Add(Me.cboImages)
+        Me.grbChoixImage.Location = New System.Drawing.Point(31, 54)
+        Me.grbChoixImage.Name = "grbChoixImage"
+        Me.grbChoixImage.Size = New System.Drawing.Size(248, 62)
+        Me.grbChoixImage.TabIndex = 5
+        Me.grbChoixImage.TabStop = False
+        Me.grbChoixImage.Text = "Choix de l'image"
         '
         'btnAnnotter
         '
         Me.btnAnnotter.Enabled = False
-        Me.btnAnnotter.Location = New System.Drawing.Point(173, 58)
+        Me.btnAnnotter.Image = Global.Mini_projet_IHM.My.Resources.Resources.sight1
+        Me.btnAnnotter.Location = New System.Drawing.Point(191, 19)
         Me.btnAnnotter.Name = "btnAnnotter"
-        Me.btnAnnotter.Size = New System.Drawing.Size(56, 53)
+        Me.btnAnnotter.Size = New System.Drawing.Size(38, 38)
         Me.btnAnnotter.TabIndex = 3
         Me.btnAnnotter.UseVisualStyleBackColor = True
         '
         'picImage
         '
-        Me.picImage.Location = New System.Drawing.Point(324, 54)
+        Me.picImage.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.picImage.Location = New System.Drawing.Point(332, 54)
         Me.picImage.Name = "picImage"
         Me.picImage.Size = New System.Drawing.Size(436, 429)
         Me.picImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.picImage.TabIndex = 1
         Me.picImage.TabStop = False
         '
+        'grbAnnoter
+        '
+        Me.grbAnnoter.Controls.Add(Me.btnAnnotter)
+        Me.grbAnnoter.Controls.Add(Me.lblPartie)
+        Me.grbAnnoter.Location = New System.Drawing.Point(31, 151)
+        Me.grbAnnoter.Name = "grbAnnoter"
+        Me.grbAnnoter.Size = New System.Drawing.Size(248, 73)
+        Me.grbAnnoter.TabIndex = 6
+        Me.grbAnnoter.TabStop = False
+        Me.grbAnnoter.Text = "Annoter"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(811, 523)
-        Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.lblPartie)
+        Me.Controls.Add(Me.grbAnnoter)
+        Me.Controls.Add(Me.grbChoixImage)
         Me.Controls.Add(Me.picImage)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
@@ -463,8 +478,10 @@ Partial Class frmMain
         Me.Text = "Head Scanner"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
+        Me.grbChoixImage.ResumeLayout(False)
         CType(Me.picImage, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grbAnnoter.ResumeLayout(False)
+        Me.grbAnnoter.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -523,5 +540,6 @@ Partial Class frmMain
     Friend WithEvents TrouverSosieToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnAnnotter As Button
     Friend WithEvents cboImages As ComboBox
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents grbChoixImage As GroupBox
+    Friend WithEvents grbAnnoter As GroupBox
 End Class
