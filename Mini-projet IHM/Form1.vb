@@ -163,6 +163,7 @@ Public Class Form1
         End If
         FichierCsv1.Delete(CheminRepertoire & "\" & ImageName, num)
         MenuAjouterSupprimer_Check(num, 0)
+        PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
 
     Public Sub MenuAjouterSupprimer_Check(num As Integer, bool As Boolean)
