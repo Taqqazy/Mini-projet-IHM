@@ -1,10 +1,10 @@
 ﻿Imports System.IO
 Imports System.Math
-Public Class Form1
+Public Class frmMain
     Private _imageName As String
     Private _fichierCsv1 As New FichierCsv
     Private cheminFichierCsv As String
-    Private _partieSelectionee = -1
+    Private _partieSelectionnee As Integer = -1
     Private _cheminRepertoire As String
     'Collection des différentes valeurs que peut prendre lblPartie
     Private _listePartie As String() = {"Toutes les parties ont été annotées", "Oeil 1", "Oeil 2", "Bord visage gauche", "Bord visage droit", "Bas du nez", "Bord du nez gauche", "Bord du nez droit", "Bas du menton", "Haut des lèvres", "Bas des lèvres", "Gauche des lèvres", "Droite des lèvres"}
@@ -19,10 +19,7 @@ Public Class Form1
             _cheminRepertoire = value
             ImageName = ""
             picImage.Image = Nothing
-
-            'ICI'
-
-
+            FichierCsv1.UnDraw_All()
             Dim RepInfo As New DirectoryInfo(value)
             cboImages.Items.Clear()
             Dim infoFichierJpg As FileInfo() = RepInfo.GetFiles("*.jpg")
@@ -40,12 +37,12 @@ Public Class Form1
         End Set
     End Property
 
-    Public Property PartieSelectionee As Integer
+    Public Property PartieSelectionnee As Integer
         Get
-            Return _partieSelectionee
+            Return _partieSelectionnee
         End Get
         Set(value As Integer)
-            _partieSelectionee = value
+            _partieSelectionnee = value
             lblPartie.Text = ListePartie(value + 1)
         End Set
     End Property
@@ -120,10 +117,10 @@ Public Class Form1
 
     'Quand l'utilisateur click sur l'image, et que une partie est séléctionnée, appel fonction FichierCsv.Add, actualisation de la partie séléctionné (suivante) et posibilité de la supprimer via Editer
     Private Sub PicImage_MouseClick(sender As Object, e As MouseEventArgs) Handles picImage.MouseClick
-        If picImage.Image IsNot Nothing And PartieSelectionee <> -1 Then
+        If picImage.Image IsNot Nothing And PartieSelectionnee <> -1 Then
             FichierCsv1.Add(New Annotation(e.X.ToString, e.Y.ToString), CheminRepertoire & "\" & ImageName)
-            MenuAjouterSupprimer_Check(PartieSelectionee, 1)
-            PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
+            MenuAjouterSupprimer_Check(PartieSelectionnee, 1)
+            PartieSelectionnee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
         End If
     End Sub
 
@@ -144,6 +141,7 @@ Public Class Form1
         FichierCsv1.Save(cheminFichierCsv)
     End Sub
 
+    ' Récupère le numéro dans le nom du menu Ajouter correspondant à la partie à ajouter (ex : récupère le 3 de "MenuAjouter3BVG") et le donne comme valeurs à PartieSelectionnee 
     Private Sub MenuAjouter_Click(sender As Object, e As EventArgs) Handles MenuAjouter1Y1.Click, MenuAjouter2Y2.Click, MenuAjouter3BVG.Click, MenuAjouter4BVD.Click, MenuAjouter5BN.Click, MenuAjouter6BNG.Click, MenuAjouter7BND.Click, MenuAjouter8BM.Click, MenuAjouter9HL.Click, MenuAjouter10BL.Click, MenuAjouter11GL.Click, MenuAjouter12DL.Click
         Dim num As Integer
         If Convert.ToInt32(sender.name(12)) - 48 <= 9 Then
@@ -151,9 +149,10 @@ Public Class Form1
         Else
             num = Convert.ToInt32(sender.name(11)) - 49
         End If
-        Me.PartieSelectionee = num
+        Me.PartieSelectionnee = num
     End Sub
 
+    ' Pareil que ci-dessus mais pour MenuSupprimer, et supprimer le passage correspondant dans le fichier csv
     Private Sub MenuSupprimer_Click(sender As Object, e As EventArgs) Handles MenuSupprimer1Y1.Click, MenuSupprimer2Y2.Click, MenuSupprimer3BVG.Click, MenuSupprimer4BVD.Click, MenuSupprimer5BN.Click, MenuSupprimer6BNG.Click, MenuSupprimer7BND.Click, MenuSupprimer8BM.Click, MenuSupprimer9HL.Click, MenuSupprimer10BL.Click, MenuSupprimer11GL.Click, MenuSupprimer12DL.Click
         Dim num As Integer
         If Convert.ToInt32(sender.name(14)) - 48 <= 9 Then
@@ -163,9 +162,10 @@ Public Class Form1
         End If
         FichierCsv1.Delete(CheminRepertoire & "\" & ImageName, num)
         MenuAjouterSupprimer_Check(num, 0)
-        PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
+        PartieSelectionnee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
 
+    ' Active ou désactiver les menus ajouter et supprimer pour le numéro correspondant (cf PartieSelectionnee) en fonction de la valeur de bool et du numéro correspondant (bool = 0 si on supprime et vice-versa)
     Public Sub MenuAjouterSupprimer_Check(num As Integer, bool As Boolean)
         Select Case num
             Case 0
@@ -211,12 +211,13 @@ Public Class Form1
         Me.Close()
     End Sub
 
+    ' Appelle la fonction Compare, si celle-ci ne renvoie pas d'erreur affiche la fenetre montrant le sosie sinon affiche message d'erreur correspondant
     Private Sub TrouverSosieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TrouverSosieToolStripMenuItem.Click
         Dim temp As Integer = FichierCsv1.Compare(CheminRepertoire & "\" & ImageName)
         If temp <> -1 Then
             If temp <> -2 Then
-                Form2.Show()
-                Form2.PictureBox1.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
+                frmSosie.Show()
+                frmSosie.picSosie.Image = Image.FromFile(FichierCsv1.ListFileName(temp))
             End If
         Else MsgBox("Il n'existe pas d'autres visages ayant toutes les annotations de compléter", vbOKOnly)
         End If
@@ -231,7 +232,7 @@ Public Class Form1
                 FichierCsv1.ListAnnotation.Last.Add(Nothing)
             Next
         End If
-        PartieSelectionee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
+        PartieSelectionnee = FichierCsv1.NextAnnotation(CheminRepertoire & "\" & ImageName)
     End Sub
 End Class
 
@@ -269,8 +270,8 @@ Public Class FichierCsv
         Else
             indexFileName = ListFileName.IndexOf(imagePath)
         End If
-        ListAnnotation(indexFileName)(Form1.PartieSelectionee) = annotation
-        If Form1.CheminRepertoire & "\" & Form1.ImageName = imagePath Then
+        ListAnnotation(indexFileName)(frmMain.PartieSelectionnee) = annotation
+        If frmMain.CheminRepertoire & "\" & frmMain.ImageName = imagePath Then
             annotation.Draw()
         End If
 
@@ -278,7 +279,7 @@ Public Class FichierCsv
 
     Public Sub Delete(imagePath As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imagePath)
-        Form1.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PictureBoxCross)
+        frmMain.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PicCross)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
     End Sub
 
@@ -307,6 +308,7 @@ Public Class FichierCsv
         Return ListAnnotation(ListFileName.IndexOf(imagePath)).IndexOf(Nothing)
     End Function
 
+    ' Fonction chargée de lire le fichier csv et d'ajouter à partir de celui-ci et en tenant compte de son formatage les annotations des images dans le programme
     Public Function Load(fileName As String) As Boolean
         Try
             Dim numRows As Long
@@ -331,9 +333,9 @@ Public Class FichierCsv
                     If strline(y) <> "null" And strline(y) <> Nothing Then
                         strlinecoords = strline(y).Split(" ", 4, StringSplitOptions.RemoveEmptyEntries)
                         annotation = New Annotation(CInt(strlinecoords(0)), CInt(strlinecoords(1)))
-                        Form1.PartieSelectionee = y - 1
-                        Form1.FichierCsv1.Add(annotation, strline(0))
-                        Form1.PartieSelectionee = -1
+                        frmMain.PartieSelectionnee = y - 1
+                        frmMain.FichierCsv1.Add(annotation, strline(0))
+                        frmMain.PartieSelectionnee = -1
                     End If
                 Next
             Next
@@ -345,33 +347,36 @@ Public Class FichierCsv
         End Try
     End Function
 
+    ' Enlève toutes les croix affichées
     Public Sub UnDraw_All()
         For Each list In ListAnnotation
             For Each sousliste In list
                 If sousliste IsNot Nothing Then
-                    Form1.Controls.Remove(sousliste.PictureBoxCross)
+                    frmMain.Controls.Remove(sousliste.PicCross)
                 End If
             Next
         Next
-        Form1.TrouverSosieToolStripMenuItem.Enabled = False
+        frmMain.TrouverSosieToolStripMenuItem.Enabled = False
     End Sub
 
+    ' Met à jour les croix affichées au changement d'image et les menus ajouter / supprimer correspondants
     Public Sub Draw_Update()
         UnDraw_All()
-        If ListFileName.Contains(Form1.CheminRepertoire & "\" & Form1.ImageName) Then
-            For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName)).Count - 1
-                If ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName))(i) IsNot Nothing Then
-                    ListAnnotation(ListFileName.IndexOf(Form1.CheminRepertoire & "\" & Form1.ImageName))(i).Draw()
-                    Form1.MenuAjouterSupprimer_Check(i, 1)
+        If ListFileName.Contains(frmMain.CheminRepertoire & "\" & frmMain.ImageName) Then
+            For i As Integer = 0 To ListAnnotation(ListFileName.IndexOf(frmMain.CheminRepertoire & "\" & frmMain.ImageName)).Count - 1
+                If ListAnnotation(ListFileName.IndexOf(frmMain.CheminRepertoire & "\" & frmMain.ImageName))(i) IsNot Nothing Then
+                    ListAnnotation(ListFileName.IndexOf(frmMain.CheminRepertoire & "\" & frmMain.ImageName))(i).Draw()
+                    frmMain.MenuAjouterSupprimer_Check(i, 1)
                 End If
             Next
         Else
             For i As Integer = 0 To 11
-                Form1.MenuAjouterSupprimer_Check(i, 0)
+                frmMain.MenuAjouterSupprimer_Check(i, 0)
             Next
         End If
     End Sub
 
+    ' Fonction chargée de trouver le sosie le plus proche si toutes les annotations du fichier csv sont remplies; 
     Public Function Compare(imagePath As String)
         Dim indImage As Integer = ListFileName.IndexOf(imagePath)
         For z As Integer = 0 To ListAnnotation(indImage).Count - 1
@@ -381,12 +386,12 @@ Public Class FichierCsv
             End If
         Next
 
+        ' liste contenant les ratios de 3 images (ratioLevre, ratioNez, ratioVisage, ratioYeux) (image à comparer et 2 autres qu'on compare à l'image à comparer pour garder la plus proche).
         Dim ratios As New List(Of List(Of Double)) From {
             New List(Of Double) From {0, 0, 0, 0},
             Nothing,
             New List(Of Double) From {0, 0, 0, 0}
         }
-        ' liste contenant les ratios de 3 images (ratioLevre, ratioNez, ratioVisage, ratioYeux) (image à comparer et 2 autres qu'on compare à l'image à comparer pour garder la plus proche).
         Dim dist01 As Double = 0
         Dim dist02 As Double = 0
         Dim indPlusSimilaire As Integer = -1
@@ -396,6 +401,9 @@ Public Class FichierCsv
         ratios(0)(3) = Compare_RatioCalcul(ListAnnotation(indImage)(3), ListAnnotation(indImage)(2), ListAnnotation(indImage)(1), ListAnnotation(indImage)(0))
 
         Dim i As Integer = 0
+        ' Tant qu'on a pas testé tous les visages enregistrés, l'index 2 de la liste prend les ratios du nouveau visage. On compare ensuite au visage précédemment testé (index 1)
+        ' et si la distance entre le nouveau visage (donc index 2) et le visage a comparer (index 0) est plus petite qu'avec le visage en index 1, on remplace le visage en index 1 par le nouveau visage etc
+        ' Renvoie ensuite l'indice du visage différent le plus proche
         While i < ListFileName.Count
             If i <> indImage Then
                 For y As Integer = 0 To ListAnnotation(i).Count - 1
@@ -433,6 +441,8 @@ Public Class FichierCsv
         Return indPlusSimilaire
     End Function
 
+    ' Renvoie le ratio correspondant
+    ' Formule de calcul du ratio : ratio = (distance entre a1 et a2)/(distance entre a3 et a4)
     Public Function Compare_RatioCalcul(a1 As Annotation, a2 As Annotation, a3 As Annotation, a4 As Annotation)
         Return Sqrt(Pow((a2.XCoord - a1.XCoord), 2) + Pow((a2.YCoord - a1.YCoord), 2)) / Sqrt(Pow((a4.XCoord - a3.XCoord), 2) + Pow((a4.YCoord - a3.YCoord), 2))
     End Function
@@ -440,7 +450,7 @@ End Class
 
 Public Class Annotation
     Private _xCoord, _yCoord As Double
-    Private _pictureBoxCross As PictureBox
+    Private _picCross As PictureBox
 
     Public Property XCoord As Double
         Get
@@ -465,24 +475,26 @@ Public Class Annotation
         Me.YCoord = yCoord
     End Sub
 
-    Public Property PictureBoxCross As PictureBox
+    Public Property PicCross As PictureBox
         Get
-            Return _pictureBoxCross
+            Return _picCross
         End Get
         Set(value As PictureBox)
-            _pictureBoxCross = value
+            _picCross = value
         End Set
     End Property
 
+    ' Creer une picturebox piccross, et la positionne et l'affiche aux coordonnées de l'annotation
+    ' Active également le menu Trouver sosie
     Public Sub Draw()
-        PictureBoxCross = New PictureBox With {
+        PicCross = New PictureBox With {
             .Image = My.Resources.cross,
             .SizeMode = PictureBoxSizeMode.AutoSize,
-            .Location = New Point(Form1.picImage.Location.X + XCoord - 8, Form1.picImage.Location.Y + YCoord - 8)
+            .Location = New Point(frmMain.picImage.Location.X + XCoord - 8, frmMain.picImage.Location.Y + YCoord - 8)
         }
-        Form1.Controls.Add(PictureBoxCross)
-        PictureBoxCross.BringToFront()
-        Form1.TrouverSosieToolStripMenuItem.Enabled = True
+        frmMain.Controls.Add(PicCross)
+        PicCross.BringToFront()
+        frmMain.TrouverSosieToolStripMenuItem.Enabled = True
     End Sub
 
 End Class
