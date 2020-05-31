@@ -367,10 +367,12 @@ Public Class FichierCsv
                 y = 0
                 Dim z As Integer = 0
                 While z < listCoordTemp.Count - 1
-                    annotation = New Annotation(CDbl(listCoordTemp(z)), CDbl(listCoordTemp(z + 1)))
-                    frmMain.PartieSelectionnee = z / 2
-                    frmMain.FichierCsv1.Add(annotation, strLine(0))
-                    frmMain.PartieSelectionnee = -1
+                    If listCoordTemp(z) IsNot Nothing Then
+                        annotation = New Annotation(CDbl(listCoordTemp(z)), CDbl(listCoordTemp(z + 1)))
+                        frmMain.PartieSelectionnee = z / 2
+                        frmMain.FichierCsv1.Add(annotation, strLine(0))
+                        frmMain.PartieSelectionnee = -1
+                    End If
                     z += 2
                 End While
             Next
