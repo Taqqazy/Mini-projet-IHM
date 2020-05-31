@@ -247,6 +247,7 @@ End Class
 Public Class FichierCsv
     Private _listAnnotation As New List(Of List(Of Annotation))
     Private _listFileName As New List(Of String)
+    Private _listAbreviationPartie As String() = {"Y1", "Y2", "BVG", "BVD", "BN", "BNG", "BND", "BM", "LH", "BL", "LG", "LD"}
 
     Public Property ListFileName As List(Of String)
         Get
@@ -263,6 +264,15 @@ Public Class FichierCsv
         End Get
         Set(value As List(Of List(Of Annotation)))
             _listAnnotation = value
+        End Set
+    End Property
+
+    Public Property ListAbreviationPartie As String()
+        Get
+            Return _listAbreviationPartie
+        End Get
+        Set(value As String())
+            _listAbreviationPartie = value
         End Set
     End Property
 
@@ -289,7 +299,7 @@ Public Class FichierCsv
     'Supprime l'annotation à l'index 'indexASupprimer' de l'image 'imagePath'
     Public Sub Delete(imagePath As String, indexASupprimer As Integer)
         Dim indexFileName As Integer = ListFileName.IndexOf(imagePath)
-        frmMain.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PicCross)
+        frmMain.picImage.Controls.Remove(ListAnnotation(indexFileName)(indexASupprimer).PicCross)
         ListAnnotation(indexFileName)(indexASupprimer) = Nothing
     End Sub
 
@@ -298,13 +308,20 @@ Public Class FichierCsv
     Public Sub Save(fileName As String)
         Try
             Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
+            streamCsv.Write("imagefile;")
+            For Each nom As String In ListAbreviationPartie
+                streamCsv.Write(nom & ".x" & ";")
+                streamCsv.Write(nom & ".y" & ";")
+            Next
+            streamCsv.WriteLine()
+
             For i = 0 To Me.ListFileName.Count - 1
-                streamCsv.Write(Me.ListFileName(i) + " | ")
+                streamCsv.Write(Me.ListFileName(i) & ";")
                 For y = 0 To Me.ListAnnotation(i).Count - 1
                     If Me.ListAnnotation(i)(y) Is Nothing Then
-                        streamCsv.Write("null | ")
+                        streamCsv.Write("null;null;")
                     Else
-                        streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString + " " + Me.ListAnnotation(i)(y).YCoord.ToString + " | ")
+                        streamCsv.Write(Me.ListAnnotation(i)(y).XCoord.ToString & ";" & Me.ListAnnotation(i)(y).YCoord.ToString & ";")
                     End If
                 Next
                 streamCsv.WriteLine()
