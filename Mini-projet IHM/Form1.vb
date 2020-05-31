@@ -247,7 +247,7 @@ End Class
 Public Class FichierCsv
     Private _listAnnotation As New List(Of List(Of Annotation))
     Private _listFileName As New List(Of String)
-    Private _listAbreviationPartie As String() = {"Y1", "Y2", "BVG", "BVD", "BN", "BNG", "BND", "BM", "LH", "BL", "LG", "LD"}
+    Private _listAbreviationPartie As New List(Of String) From {"Y1.x", "Y1.y", "Y2.x", "Y2.y", "BVG.x", "BVG.y", "BVD.x", "BVD.y", "BN.x", "BN.y", "BNG.x", "BNG.y", "BND.x", "BND.y", "BM.x", "BM.y", "LH.x", "LH.y", "BL.x", "BL.y", "LG.x", "LG.y", "LD.x", "LD.y"}
 
     Public Property ListFileName As List(Of String)
         Get
@@ -267,11 +267,11 @@ Public Class FichierCsv
         End Set
     End Property
 
-    Public Property ListAbreviationPartie As String()
+    Public Property ListAbreviationPartie As List(Of String)
         Get
             Return _listAbreviationPartie
         End Get
-        Set(value As String())
+        Set(value As List(Of String))
             _listAbreviationPartie = value
         End Set
     End Property
@@ -310,8 +310,7 @@ Public Class FichierCsv
             Dim streamCsv As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(fileName, False)
             streamCsv.Write("imagefile;")
             For Each nom As String In ListAbreviationPartie
-                streamCsv.Write(nom & ".x" & ";")
-                streamCsv.Write(nom & ".y" & ";")
+                streamCsv.Write(nom & ";")
             Next
             streamCsv.WriteLine()
 
@@ -343,33 +342,39 @@ Public Class FichierCsv
         Try
             Dim numRows As Long
             Dim numCols As Long
-            Dim tmpstream As StreamReader = File.OpenText(fileName)
-            Dim strlines() As String
-            Dim strline() As String
-            Dim strlinecoords() As String
+            Dim tmpStream As StreamReader = File.OpenText(fileName)
+            Dim strLines() As String
+            Dim strLine() As String
+            Dim strFirstLine() As String
             Dim annotation As Annotation
+            Dim listCoordTemp(23) As String
 
-            strlines = tmpstream.ReadToEnd().Split(Environment.NewLine, 50, StringSplitOptions.RemoveEmptyEntries)
-            numRows = UBound(strlines)
-            strline = strlines(0).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
-            numCols = UBound(strline)
+            strLines = tmpStream.ReadToEnd().Split(Environment.NewLine, 50, StringSplitOptions.RemoveEmptyEntries)
+            numRows = UBound(strLines)
+            strFirstLine = strLines(0).Split(";", 26, StringSplitOptions.RemoveEmptyEntries)
+            numCols = UBound(strFirstLine)
 
-            For x As Integer = 0 To numRows
-                strline = strlines(x).Split("|", 14, StringSplitOptions.RemoveEmptyEntries)
-                For index As Integer = 0 To strline.Length - 1
-                    strline(index) = strline(index).Trim()
-                Next
-                For y As Integer = 1 To numCols
-                    If strline(y) <> "null" And strline(y) <> Nothing Then
-                        strlinecoords = strline(y).Split(" ", 4, StringSplitOptions.RemoveEmptyEntries)
-                        annotation = New Annotation(CInt(strlinecoords(0)), CInt(strlinecoords(1)))
-                        frmMain.PartieSelectionnee = y - 1
-                        frmMain.FichierCsv1.Add(annotation, strline(0))
-                        frmMain.PartieSelectionnee = -1
+            For x As Integer = 1 To numRows
+                strLine = strLines(x).Split(";", 26, StringSplitOptions.RemoveEmptyEntries)
+                ReDim listCoordTemp(23)
+                Dim y As Integer = 1
+                While y <= numCols
+                    If strLine(y) <> "null" Then
+                        listCoordTemp(ListAbreviationPartie.IndexOf(strFirstLine(y))) = strLine(y)
                     End If
-                Next
+                    y += 1
+                End While
+                y = 0
+                Dim z As Integer = 0
+                While z < listCoordTemp.Count - 1
+                    annotation = New Annotation(CDbl(listCoordTemp(z)), CDbl(listCoordTemp(z + 1)))
+                    frmMain.PartieSelectionnee = z / 2
+                    frmMain.FichierCsv1.Add(annotation, strLine(0))
+                    frmMain.PartieSelectionnee = -1
+                    z += 2
+                End While
             Next
-            tmpstream.Close()
+            tmpStream.Close()
             Return True
         Catch ex As System.IO.IOException
             MessageBox.Show("Impossible d'ouvrir " & fileName & ". Essayez de fermer le fichier et vérifiez son accès en lecture", "Erreur ouverture", MessageBoxButtons.OK, MessageBoxIcon.Error)
